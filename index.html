@@ -1,0 +1,634 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Алёна ❤️ Friendship Test</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: linear-gradient(-45deg,#160d2b,#51265f,#21113e,#37205b);
+  background-size: 400% 400%;
+  animation: bg 10s ease infinite;
+}
+
+@keyframes bg {
+  0%,100% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+}
+
+.card {
+  background: #261b40ed;
+  border: 1px solid #9c75cb;
+  border-radius: 25px;
+  padding: 25px 18px;
+  box-shadow: 0 15px 50px #0007;
+  animation: appear .6s ease;
+}
+
+@keyframes appear {
+  from {opacity:0;transform:translateY(35px) scale(.95)}
+  to {opacity:1;transform:translateY(0) scale(1)}
+}
+
+.hidden {display:none!important}
+
+h1 {
+  color: #ffafd1;
+  font-size: 32px;
+}
+
+h2 {color:#ffe08a}
+
+.roast {
+  color:#ff799f;
+  font-size:25px;
+  font-weight:bold;
+}
+
+p {line-height:1.5;color:#dfd1ef}
+
+button {
+  border:0;
+  border-radius:15px;
+  padding:15px 20px;
+  margin:8px;
+  font-size:16px;
+  font-weight:bold;
+  color:#251333;
+  background:linear-gradient(100deg,#ff91bd,#b995ff);
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:active {
+  transform:scale(.92);
+}
+
+.scores,.options,.names {
+  display:flex;
+  gap:10px;
+  margin:20px 0;
+}
+
+.score,.name,.option {
+  flex:1;
+  border-radius:16px;
+  padding:15px 7px;
+}
+
+.score {
+  background:#40305b;
+  font-weight:bold;
+}
+
+.percent {
+  color:#ffe08a;
+  font-size:26px;
+  margin-top:8px;
+}
+
+.option {
+  background:#493365;
+  color:white;
+  border:2px solid #a77bd2;
+  animation: pop .4s ease both;
+  min-height:65px;
+}
+
+.option:nth-child(2) {
+  animation-delay:.12s;
+}
+
+@keyframes pop {
+  from {opacity:0;transform:scale(.7)}
+  to {opacity:1;transform:scale(1)}
+}
+
+.option.selected {
+  border-color:#ffe08a;
+  background:#74518e;
+  transform:scale(1.04);
+}
+
+.option.used {
+  opacity:.35;
+  pointer-events:none;
+}
+
+.name {
+  background:#38294f;
+  color:white;
+  border:2px dashed #b58ce0;
+  min-height:90px;
+}
+
+.name.active {
+  border-color:#ffe08a;
+  background:#604478;
+}
+
+.assigned {
+  display:block;
+  color:#ffe08a;
+  margin-top:8px;
+  font-size:13px;
+}
+
+#message {
+  min-height:35px;
+  font-weight:bold;
+  color:#ffe08a;
+}
+
+.correct {
+  animation: good .5s ease;
+}
+
+@keyframes good {
+  50% {background:#208b62;transform:scale(1.06)}
+}
+
+.wrong {
+  animation: shake .4s ease;
+}
+
+@keyframes shake {
+  25% {transform:translateX(-7px)}
+  75% {transform:translateX(7px)}
+}
+
+.result {
+  color:#ff9fc6;
+  font-size:27px;
+  font-weight:900;
+  line-height:1.4;
+  animation: appear 1s ease;
+}
+
+.finalEmoji {
+  font-size:65px;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  to {transform:translateY(-13px) rotate(8deg)}
+}
+
+#confetti {
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+.particle {
+  position:absolute;
+  top:-20px;
+  font-size:23px;
+  animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+  to {transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+.small {font-size:13px;color:#c9b8df}
+
+</style>
+</head>
+
+<body>
+
+<div id="confetti"></div>
+
+<div class="container">
+
+<!-- ГЛАВНАЯ -->
+
+<div class="card" id="start">
+
+<div class="finalEmoji">💜</div>
+
+<h1>АЛЁНА, ПРИВЕТ!</h1>
+
+<h2>Ты крутая подруга!</h2>
+
+<h2>И Арих тоже 😎</h2>
+
+<div class="roast">А ЕГОР — LOX 🤡</div>
+
+<p>✨ FRIENDSHIP TEST ✨</p>
+
+<p>Кого ты лучше знаешь?</p>
+
+<button onclick="begin()">НАЧАТЬ ТЕСТ 🔥</button>
+
+</div>
+
+
+<!-- ИГРА -->
+
+<div class="card hidden" id="game">
+
+<h2>🧠 БИТВА ЗНАНИЙ</h2>
+
+<div class="scores">
+
+<div class="score">
+🟣 АРТЁМ
+<div class="percent" id="artemScore">0%</div>
+</div>
+
+<div class="score">
+🩷 ЕГОР
+<div class="percent" id="egorScore">0%</div>
+</div>
+
+</div>
+
+<p id="number">Вопрос 1 из 5</p>
+
+<h2 id="question"></h2>
+
+<p class="small" id="instruction">
+Выбери вариант и отнеси его к имени!
+</p>
+
+<div class="options" id="options"></div>
+
+<div class="names" id="names">
+
+<button class="name" onclick="assign('artem')">
+🟣 АРТЁМ
+<span class="assigned" id="artemAssigned"></span>
+</button>
+
+<button class="name" onclick="assign('egor')">
+🩷 ЕГОР
+<span class="assigned" id="egorAssigned"></span>
+</button>
+
+</div>
+
+<div id="message">Выбирай ответы 👆</div>
+
+<button id="next" class="hidden" onclick="next()">
+ДАЛЬШЕ →
+</button>
+
+</div>
+
+
+<!-- ФИНАЛ -->
+
+<div class="card hidden" id="finish">
+
+<div class="finalEmoji">🏆</div>
+
+<h1>ТЕСТ ПРОЙДЕН!</h1>
+
+<div class="scores">
+
+<div class="score">
+🟣 АРТЁМ
+<div class="percent" id="finalArtem">0%</div>
+</div>
+
+<div class="score">
+🩷 ЕГОР
+<div class="percent" id="finalEgor">0%</div>
+</div>
+
+</div>
+
+<div class="result">
+АЛЁНА, ТЫ РЕАЛЬНО ПИЗДАТАЯ ПОДРУГА ❤️
+</div>
+
+<h2>ГО В ФОРТНАЙТ ПЭЖЭ 🎮</h2>
+
+<p>Ты настоящая легенда 😂</p>
+
+<button onclick="location.reload()">ЕЩЁ РАЗ 🔁</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+{
+q:"Какая наша любимая игра?",
+a:["Fortnite","Roblox"]
+},
+
+{
+q:"Какая наша любимая еда?",
+a:["Макароны","Шаурма"]
+},
+
+{
+q:"Какой наш любимый напиток?",
+a:["Авишка","Липтон"]
+},
+
+{
+q:"У кого пиздец шутки?",
+a:["Крутой","Лысый"]
+}
+
+];
+
+let current=0;
+let selected=null;
+let assigned=[];
+let scores={artem:0,egor:0};
+let finished=false;
+
+function begin(){
+
+document.getElementById("start").classList.add("hidden");
+document.getElementById("game").classList.remove("hidden");
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+selected=null;
+assigned=[];
+finished=false;
+
+document.getElementById("number").textContent=
+"Вопрос "+(current+1)+" из 5";
+
+document.getElementById("question").textContent=
+questions[current].q;
+
+document.getElementById("instruction").textContent=
+"Выбери вариант и отнеси его к имени!";
+
+document.getElementById("message").textContent=
+"Выбирай ответы 👆";
+
+document.getElementById("next").classList.add("hidden");
+
+document.getElementById("names").classList.remove("hidden");
+
+document.getElementById("artemAssigned").textContent="";
+document.getElementById("egorAssigned").textContent="";
+
+const box=document.getElementById("options");
+box.innerHTML="";
+
+questions[current].a.forEach((answer,index)=>{
+
+let btn=document.createElement("button");
+
+btn.className="option";
+btn.textContent=answer;
+
+btn.onclick=()=>{
+
+if(assigned.some(x=>x.index===index))return;
+
+selected=index;
+
+document.querySelectorAll(".option").forEach(el=>{
+el.classList.remove("selected");
+});
+
+btn.classList.add("selected");
+
+};
+
+box.appendChild(btn);
+
+});
+
+updateScores();
+
+}
+
+function assign(person){
+
+if(finished)return;
+
+if(selected===null){
+
+document.getElementById("message").textContent=
+"Сначала выбери вариант!";
+
+return;
+
+}
+
+if(assigned.some(x=>x.person===person)){
+
+document.getElementById("message").textContent=
+"Для этого имени уже есть ответ!";
+
+return;
+
+}
+
+const correctPerson=selected===0?"artem":"egor";
+
+const option=document.querySelectorAll(".option")[selected];
+
+if(person===correctPerson){
+
+scores[person]+=10;
+
+option.classList.add("correct");
+
+document.getElementById("message").textContent=
+"ПРАВИЛЬНО! +10% 🔥";
+
+}else{
+
+option.classList.add("wrong");
+
+document.getElementById("message").textContent=
+"НЕПРАВИЛЬНО 😂 +0%";
+
+}
+
+assigned.push({index:selected,person:person});
+
+option.classList.add("used");
+
+document.getElementById(person+"Assigned").textContent=
+"✓ "+questions[current].a[selected];
+
+selected=null;
+
+if(assigned.length===2){
+
+document.getElementById("message").textContent+=
+" Раунд завершён!";
+
+document.getElementById("next").classList.remove("hidden");
+
+}
+
+updateScores();
+
+}
+
+
+function updateScores(){
+
+document.getElementById("artemScore").textContent=
+scores.artem+"%";
+
+document.getElementById("egorScore").textContent=
+scores.egor+"%";
+
+}
+
+
+function showLastQuestion(){
+
+document.getElementById("number").textContent="Вопрос 5 из 5";
+
+document.getElementById("question").textContent=
+"Кто дороже для тебя? ❤️";
+
+document.getElementById("instruction").textContent=
+"Выбери только одного человека!";
+
+document.getElementById("names").classList.add("hidden");
+
+document.getElementById("next").classList.add("hidden");
+
+document.getElementById("message").textContent=
+"Твой выбор решает всё ❤️";
+
+const box=document.getElementById("options");
+
+box.innerHTML="";
+
+const choices=[
+{text:"Пухляш ❤️",person:"artem"},
+{text:"Егорчик побритый лобочек 😎",person:"egor"}
+];
+
+choices.forEach(choice=>{
+
+let btn=document.createElement("button");
+
+btn.className="option";
+btn.textContent=choice.text;
+
+btn.onclick=()=>{
+
+if(finished)return;
+
+finished=true;
+
+scores[choice.person]+=20;
+
+btn.classList.add("correct");
+
+document.getElementById("message").textContent=
+"ТВОЙ ВЫБОР ПРИНЯТ! +20% ❤️";
+
+updateScores();
+
+setTimeout(showResult,1300);
+
+};
+
+box.appendChild(btn);
+
+});
+
+}
+
+
+function next(){
+
+if(assigned.length!==2)return;
+
+current++;
+
+if(current===4){
+
+showLastQuestion();
+
+}else{
+
+showQuestion();
+
+}
+
+}
+
+
+function showResult(){
+
+document.getElementById("game").classList.add("hidden");
+
+document.getElementById("finish").classList.remove("hidden");
+
+document.getElementById("finalArtem").textContent=
+scores.artem+"%";
+
+document.getElementById("finalEgor").textContent=
+scores.egor+"%";
+
+confetti();
+
+}
+
+
+function confetti(){
+
+const box=document.getElementById("confetti");
+
+const emojis=["💜","❤️","🎉","✨","🎮","⭐"];
+
+for(let i=0;i<45;i++){
+
+let particle=document.createElement("div");
+
+particle.className="particle";
+
+particle.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+
+particle.style.left=Math.random()*100+"%";
+
+particle.style.animationDelay=Math.random()*2+"s";
+
+box.appendChild(particle);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
