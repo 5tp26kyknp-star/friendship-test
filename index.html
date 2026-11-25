@@ -3,214 +3,74 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Алёна ❤️ Friendship Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Friendship Test 💀</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+margin:0;padding:20px;color:white;text-align:center;
+font-family:Arial;background:linear-gradient(-45deg,#160d2b,#51265f,#21113e,#37205b);
+background-size:400% 400%;animation:bg 10s infinite;
 }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  color: white;
-  background: linear-gradient(-45deg,#160d2b,#51265f,#21113e,#37205b);
-  background-size: 400% 400%;
-  animation: bg 10s ease infinite;
+@keyframes bg{50%{background-position:100% 50%}}
+.card{
+max-width:650px;margin:25px auto;padding:22px;
+background:#261b40;border:1px solid #b995ff;
+border-radius:24px;box-shadow:0 10px 40px #0008;
+animation:show .5s;
 }
-
-@keyframes bg {
-  0%,100% {background-position:0% 50%}
-  50% {background-position:100% 50%}
+@keyframes show{from{opacity:0;transform:translateY(20px)}to{opacity:1}}
+.hidden{display:none!important}
+h1{color:#ffafd1}
+h2{color:#ffe08a}
+p{color:#dfd1ef;line-height:1.5}
+button{
+border:0;border-radius:14px;padding:15px 20px;margin:7px;
+font-size:16px;font-weight:bold;cursor:pointer;
+background:linear-gradient(100deg,#ff91bd,#b995ff);
+color:#251333;transition:.2s;
 }
-
-.container {
-  max-width: 600px;
-  margin: auto;
-  text-align: center;
+button:active{transform:scale(.94)}
+#no{position:relative}
+.grid{
+display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0
 }
-
-.card {
-  background: #261b40ed;
-  border: 1px solid #9c75cb;
-  border-radius: 25px;
-  padding: 25px 18px;
-  box-shadow: 0 15px 50px #0007;
-  animation: appear .6s ease;
+.person{
+background:#38294f;border:1px solid #b995ff;
+border-radius:17px;padding:10px;cursor:pointer;
 }
-
-@keyframes appear {
-  from {opacity:0;transform:translateY(35px) scale(.95)}
-  to {opacity:1;transform:translateY(0) scale(1)}
+.person img,.questionmark{
+width:100%;height:160px;object-fit:cover;border-radius:12px;
 }
-
-.hidden {display:none!important}
-
-h1 {
-  color: #ffafd1;
-  font-size: 32px;
+.questionmark{
+display:flex;align-items:center;justify-content:center;
+font-size:65px;background:#493365;color:#ffe08a;
 }
-
-h2 {color:#ffe08a}
-
-.roast {
-  color:#ff799f;
-  font-size:25px;
-  font-weight:bold;
+.person b{display:block;padding:10px}
+.secret{grid-column:1/-1;border:1px dashed #d5a5ff}
+.option{display:block;width:100%;background:#493365;color:white;border:2px solid #b995ff}
+.option.correct{background:#208b62}
+.option.wrong{background:#923454}
+#message{min-height:35px;color:#ffe08a}
+.progress{height:9px;background:#ffffff22;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:#ff91bd;width:0;transition:.3s}
+#settingsButton{position:fixed;bottom:12px;left:50%;transform:translateX(-50%)}
+.modal{
+position:fixed;inset:0;background:#090511dd;
+display:flex;align-items:center;justify-content:center;padding:20px;
+z-index:10
 }
-
-p {line-height:1.5;color:#dfd1ef}
-
-button {
-  border:0;
-  border-radius:15px;
-  padding:15px 20px;
-  margin:8px;
-  font-size:16px;
-  font-weight:bold;
-  color:#251333;
-  background:linear-gradient(100deg,#ff91bd,#b995ff);
-  cursor:pointer;
-  transition:.2s;
+.modalbox{
+background:#261b40;border:1px solid #b995ff;
+border-radius:22px;padding:25px;width:100%;max-width:400px
 }
-
-button:active {
-  transform:scale(.92);
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
+.particle{position:absolute;top:-20px;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(700deg);opacity:0}}
+@media(max-width:400px){
+.person img,.questionmark{height:125px}
 }
-
-.scores,.options,.names {
-  display:flex;
-  gap:10px;
-  margin:20px 0;
-}
-
-.score,.name,.option {
-  flex:1;
-  border-radius:16px;
-  padding:15px 7px;
-}
-
-.score {
-  background:#40305b;
-  font-weight:bold;
-}
-
-.percent {
-  color:#ffe08a;
-  font-size:26px;
-  margin-top:8px;
-}
-
-.option {
-  background:#493365;
-  color:white;
-  border:2px solid #a77bd2;
-  animation: pop .4s ease both;
-  min-height:65px;
-}
-
-.option:nth-child(2) {
-  animation-delay:.12s;
-}
-
-@keyframes pop {
-  from {opacity:0;transform:scale(.7)}
-  to {opacity:1;transform:scale(1)}
-}
-
-.option.selected {
-  border-color:#ffe08a;
-  background:#74518e;
-  transform:scale(1.04);
-}
-
-.option.used {
-  opacity:.35;
-  pointer-events:none;
-}
-
-.name {
-  background:#38294f;
-  color:white;
-  border:2px dashed #b58ce0;
-  min-height:90px;
-}
-
-.name.active {
-  border-color:#ffe08a;
-  background:#604478;
-}
-
-.assigned {
-  display:block;
-  color:#ffe08a;
-  margin-top:8px;
-  font-size:13px;
-}
-
-#message {
-  min-height:35px;
-  font-weight:bold;
-  color:#ffe08a;
-}
-
-.correct {
-  animation: good .5s ease;
-}
-
-@keyframes good {
-  50% {background:#208b62;transform:scale(1.06)}
-}
-
-.wrong {
-  animation: shake .4s ease;
-}
-
-@keyframes shake {
-  25% {transform:translateX(-7px)}
-  75% {transform:translateX(7px)}
-}
-
-.result {
-  color:#ff9fc6;
-  font-size:27px;
-  font-weight:900;
-  line-height:1.4;
-  animation: appear 1s ease;
-}
-
-.finalEmoji {
-  font-size:65px;
-  animation: bounce 1s infinite alternate;
-}
-
-@keyframes bounce {
-  to {transform:translateY(-13px) rotate(8deg)}
-}
-
-#confetti {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-.particle {
-  position:absolute;
-  top:-20px;
-  font-size:23px;
-  animation: fall 3s linear forwards;
-}
-
-@keyframes fall {
-  to {transform:translateY(110vh) rotate(720deg);opacity:0}
-}
-
-.small {font-size:13px;color:#c9b8df}
-
 </style>
 </head>
 
@@ -218,417 +78,241 @@ button:active {
 
 <div id="confetti"></div>
 
-<div class="container">
-
-<!-- ГЛАВНАЯ -->
-
-<div class="card" id="start">
-
-<div class="finalEmoji">💜</div>
-
-<h1>АЛЁНА, ПРИВЕТ!</h1>
-
-<h2>Ты крутая подруга!</h2>
-
-<h2>И Арих тоже 😎</h2>
-
-<div class="roast">А ЕГОР — LOX 🤡</div>
-
-<p>✨ FRIENDSHIP TEST ✨</p>
-
-<p>Кого ты лучше знаешь?</p>
-
-<button onclick="begin()">НАЧАТЬ ТЕСТ 🔥</button>
-
+<div id="update" style="text-align:right;color:#ffe08a;font-size:13px">
+ОБНОВА ВЫШЛА
 </div>
 
+<!-- ПРИВЕТСТВИЕ -->
+<div class="card" id="welcome">
+<h1>💀 ВЫ ГОТОВЫ К ПОЗОРУ?</h1>
+<p>Сейчас узнаем, насколько хорошо ты знаешь своих друзей.</p>
+<button onclick="enter()">ДА 🔥</button>
+<button id="no" onmouseover="runAway()" ontouchstart="runAway()" onclick="runAway()">НЕТ 😭</button>
+</div>
 
-<!-- ИГРА -->
+<!-- ГЛАВНЫЙ ЭКРАН -->
+<div class="card hidden" id="home">
+<h1>FRIENDSHIP TEST</h1>
+<h2>ВЫБИРАЙ ИСПЫТАНИЕ 🤡</h2>
 
+<div class="grid">
+
+<div class="person" onclick="start('artem')">
+<img src="artem.jpg" alt="Артём">
+<b>1. АРТЁМ</b>
+</div>
+
+<div class="person" onclick="locked('Егор')">
+<div class="questionmark">❔</div>
+<b>2. ЕГОР</b>
+</div>
+
+<div class="person" onclick="start('ilya')">
+<img src="ilya.jpg" alt="Илья">
+<b>3. ИЛЬЯ</b>
+</div>
+
+<div class="person" onclick="locked('Арих')">
+<div class="questionmark">❔</div>
+<b>4. АРИХ</b>
+</div>
+
+<div class="person secret" onclick="openSecret()">
+<div class="questionmark">❓</div>
+<b>5. СЕКРЕТНЫЙ УРОВЕНЬ</b>
+</div>
+
+</div>
+</div>
+
+<!-- ТЕСТ -->
 <div class="card hidden" id="game">
-
-<h2>🧠 БИТВА ЗНАНИЙ</h2>
-
-<div class="scores">
-
-<div class="score">
-🟣 АРТЁМ
-<div class="percent" id="artemScore">0%</div>
-</div>
-
-<div class="score">
-🩷 ЕГОР
-<div class="percent" id="egorScore">0%</div>
-</div>
-
-</div>
-
-<p id="number">Вопрос 1 из 5</p>
-
+<h2 id="title"></h2>
+<p id="number"></p>
+<div class="progress"><div id="bar"></div></div>
 <h2 id="question"></h2>
-
-<p class="small" id="instruction">
-Выбери вариант и отнеси его к имени!
-</p>
-
-<div class="options" id="options"></div>
-
-<div class="names" id="names">
-
-<button class="name" onclick="assign('artem')">
-🟣 АРТЁМ
-<span class="assigned" id="artemAssigned"></span>
-</button>
-
-<button class="name" onclick="assign('egor')">
-🩷 ЕГОР
-<span class="assigned" id="egorAssigned"></span>
-</button>
-
+<div id="answers"></div>
+<p id="message">Выбирай ответ 👆</p>
+<button id="next" class="hidden" onclick="next()">ДАЛЬШЕ →</button>
+<button onclick="home()">НАЗАД</button>
 </div>
 
-<div id="message">Выбирай ответы 👆</div>
-
-<button id="next" class="hidden" onclick="next()">
-ДАЛЬШЕ →
-</button>
-
+<!-- РЕЗУЛЬТАТ -->
+<div class="card hidden" id="result">
+<h1>🏆 ТЕСТ ПРОЙДЕН!</h1>
+<h2 id="score"></h2>
+<div id="resultText"></div>
+<button onclick="home()">К УРОВНЯМ</button>
 </div>
 
-
-<!-- ФИНАЛ -->
-
-<div class="card hidden" id="finish">
-
-<div class="finalEmoji">🏆</div>
-
-<h1>ТЕСТ ПРОЙДЕН!</h1>
-
-<div class="scores">
-
-<div class="score">
-🟣 АРТЁМ
-<div class="percent" id="finalArtem">0%</div>
+<!-- СЕКРЕТ -->
+<div class="card hidden" id="secret">
+<h1>🔐 СЕКРЕТНЫЙ УРОВЕНЬ</h1>
+<h2>МУСЯ?! 💀</h2>
+<p>Поздравляем. Ты добрался до того, чего никто не должен был видеть.</p>
+<div style="font-size:65px">👀</div>
+<button onclick="home()">НАЗАД</button>
 </div>
 
-<div class="score">
-🩷 ЕГОР
-<div class="percent" id="finalEgor">0%</div>
+<button id="settingsButton" onclick="settings()">⚙️ НАСТРОЙКИ</button>
+
+<!-- НАСТРОЙКИ -->
+<div class="modal hidden" id="settings">
+<div class="modalbox">
+<h2>⚙️ НАСТРОЙКИ</h2>
+<p>Пройдено тестов: <b id="done">0/2</b></p>
+<p>Осталось до секретного: <b id="left">2</b></p>
+<div class="progress"><div id="settingsBar"></div></div>
+<p id="hint"></p>
+<button onclick="closeSettings()">ЗАКРЫТЬ</button>
 </div>
-
 </div>
-
-<div class="result">
-АЛЁНА, ТЫ РЕАЛЬНО ПИЗДАТАЯ ПОДРУГА ❤️
-</div>
-
-<h2>ГО В ФОРТНАЙТ ПЭЖЭ 🎮</h2>
-
-<p>Ты настоящая легенда 😂</p>
-
-<button onclick="location.reload()">ЕЩЁ РАЗ 🔁</button>
-
-</div>
-
-</div>
-
 
 <script>
+document.getElementById("update").textContent =
+"ОБНОВА ВЫШЛА • "+new Date().toLocaleDateString("ru-RU",{day:"numeric",month:"long"}).toUpperCase();
 
-const questions = [
+const tests={
+artem:[
+["Какое моё хобби?",["Музыка 🎵","Игры 🎮"],0],
+["Какой мой самый любимый момент в школе?",["Как я иду в столовку","Как на меня орёт С.М. 😭"],1],
+["Чем я занимаюсь?",["Футбол ⚽","Регби 🏉"],1],
+["Что я не люблю?",["Когда перебивают","Когда не понимают, что сделали они"],1],
+["Что я обожаю всего на свете?",["СВОИХ ДРУЗЕЙ ❤️"],0]
+],
+ilya:[
+["Чем Илья занимается?",["Волейбол 🏐","Футбол ⚽"],0],
+["Какой самый лучший друг у Ильи?",["Муся","Максим"],1],
+["Что Илья любит в школе?",["Избивать Мусю 😂","Деградировать"],0],
+["Какая у Ильи любимая еда?",["Пицца (школьная) 🍕","Суп"],0],
+["Илья кэжуал или кал жувал?",["Кэжуал","Кал жувал 💀"],1]
+]
+};
 
-{
-q:"Какая наша любимая игра?",
-a:["Fortnite","Roblox"]
-},
+let person="",index=0,points=0,answered=false;
+let completed=JSON.parse(localStorage.getItem("completedTests")||"{}");
 
-{
-q:"Какая наша любимая еда?",
-a:["Макароны","Шаурма"]
-},
-
-{
-q:"Какой наш любимый напиток?",
-a:["Авишка","Липтон"]
-},
-
-{
-q:"У кого пиздец шутки?",
-a:["Крутой","Лысый"]
+function show(id){
+["welcome","home","game","result","secret"].forEach(x=>
+document.getElementById(x).classList.toggle("hidden",x!==id));
 }
 
-];
+function enter(){show("home")}
 
-let current=0;
-let selected=null;
-let assigned=[];
-let scores={artem:0,egor:0};
-let finished=false;
-
-function begin(){
-
-document.getElementById("start").classList.add("hidden");
-document.getElementById("game").classList.remove("hidden");
-
-showQuestion();
-
+function runAway(){
+let b=document.getElementById("no");
+b.style.position="fixed";
+b.style.left=Math.random()*(innerWidth-b.offsetWidth-20)+"px";
+b.style.top=Math.random()*(innerHeight-b.offsetHeight-20)+"px";
+b.style.zIndex=30;
 }
 
-function showQuestion(){
+function locked(name){
+alert(name+" пока под знаком вопроса ❔");
+}
 
-selected=null;
-assigned=[];
-finished=false;
+function start(who){
+person=who;index=0;points=0;
+show("game");render();
+}
 
+function render(){
+answered=false;
+let q=tests[person][index];
+document.getElementById("title").textContent=
+person==="artem"?"ТЕСТ АРТЁМА":"ТЕСТ ИЛЬИ";
 document.getElementById("number").textContent=
-"Вопрос "+(current+1)+" из 5";
-
-document.getElementById("question").textContent=
-questions[current].q;
-
-document.getElementById("instruction").textContent=
-"Выбери вариант и отнеси его к имени!";
-
-document.getElementById("message").textContent=
-"Выбирай ответы 👆";
-
+"Вопрос "+(index+1)+" из 5";
+document.getElementById("question").textContent=q[0];
+document.getElementById("message").textContent="Выбирай ответ 👆";
+document.getElementById("bar").style.width=(index/5*100)+"%";
 document.getElementById("next").classList.add("hidden");
 
-document.getElementById("names").classList.remove("hidden");
-
-document.getElementById("artemAssigned").textContent="";
-document.getElementById("egorAssigned").textContent="";
-
-const box=document.getElementById("options");
+let box=document.getElementById("answers");
 box.innerHTML="";
-
-questions[current].a.forEach((answer,index)=>{
-
-let btn=document.createElement("button");
-
-btn.className="option";
-btn.textContent=answer;
-
-btn.onclick=()=>{
-
-if(assigned.some(x=>x.index===index))return;
-
-selected=index;
-
-document.querySelectorAll(".option").forEach(el=>{
-el.classList.remove("selected");
+q[1].forEach((answer,i)=>{
+let b=document.createElement("button");
+b.className="option";
+b.textContent=answer;
+b.onclick=()=>choose(i,b);
+box.appendChild(b);
 });
+}
 
-btn.classList.add("selected");
-
-};
-
-box.appendChild(btn);
-
+function choose(i,button){
+if(answered)return;
+answered=true;
+let q=tests[person][index];
+let buttons=document.querySelectorAll(".option");
+buttons.forEach((b,n)=>{
+b.disabled=true;
+if(n===q[2])b.classList.add("correct");
 });
-
-updateScores();
-
-}
-
-function assign(person){
-
-if(finished)return;
-
-if(selected===null){
-
-document.getElementById("message").textContent=
-"Сначала выбери вариант!";
-
-return;
-
-}
-
-if(assigned.some(x=>x.person===person)){
-
-document.getElementById("message").textContent=
-"Для этого имени уже есть ответ!";
-
-return;
-
-}
-
-const correctPerson=selected===0?"artem":"egor";
-
-const option=document.querySelectorAll(".option")[selected];
-
-if(person===correctPerson){
-
-scores[person]+=10;
-
-option.classList.add("correct");
-
-document.getElementById("message").textContent=
-"ПРАВИЛЬНО! +10% 🔥";
-
+if(i===q[2]){
+points++;
+document.getElementById("message").textContent="ПРАВИЛЬНО! 🔥";
 }else{
-
-option.classList.add("wrong");
-
-document.getElementById("message").textContent=
-"НЕПРАВИЛЬНО 😂 +0%";
-
+button.classList.add("wrong");
+document.getElementById("message").textContent="НЕПРАВИЛЬНО 😂";
 }
-
-assigned.push({index:selected,person:person});
-
-option.classList.add("used");
-
-document.getElementById(person+"Assigned").textContent=
-"✓ "+questions[current].a[selected];
-
-selected=null;
-
-if(assigned.length===2){
-
-document.getElementById("message").textContent+=
-" Раунд завершён!";
-
+document.getElementById("bar").style.width=((index+1)/5*100)+"%";
 document.getElementById("next").classList.remove("hidden");
-
+document.getElementById("next").textContent=
+index===4?"ЗАВЕРШИТЬ 🏆":"ДАЛЬШЕ →";
 }
-
-updateScores();
-
-}
-
-
-function updateScores(){
-
-document.getElementById("artemScore").textContent=
-scores.artem+"%";
-
-document.getElementById("egorScore").textContent=
-scores.egor+"%";
-
-}
-
-
-function showLastQuestion(){
-
-document.getElementById("number").textContent="Вопрос 5 из 5";
-
-document.getElementById("question").textContent=
-"Кто дороже для тебя? ❤️";
-
-document.getElementById("instruction").textContent=
-"Выбери только одного человека!";
-
-document.getElementById("names").classList.add("hidden");
-
-document.getElementById("next").classList.add("hidden");
-
-document.getElementById("message").textContent=
-"Твой выбор решает всё ❤️";
-
-const box=document.getElementById("options");
-
-box.innerHTML="";
-
-const choices=[
-{text:"Пухляш ❤️",person:"artem"},
-{text:"Егорчик побритый лобочек 😎",person:"egor"}
-];
-
-choices.forEach(choice=>{
-
-let btn=document.createElement("button");
-
-btn.className="option";
-btn.textContent=choice.text;
-
-btn.onclick=()=>{
-
-if(finished)return;
-
-finished=true;
-
-scores[choice.person]+=20;
-
-btn.classList.add("correct");
-
-document.getElementById("message").textContent=
-"ТВОЙ ВЫБОР ПРИНЯТ! +20% ❤️";
-
-updateScores();
-
-setTimeout(showResult,1300);
-
-};
-
-box.appendChild(btn);
-
-});
-
-}
-
 
 function next(){
-
-if(assigned.length!==2)return;
-
-current++;
-
-if(current===4){
-
-showLastQuestion();
-
-}else{
-
-showQuestion();
-
-}
-
-}
-
-
-function showResult(){
-
-document.getElementById("game").classList.add("hidden");
-
-document.getElementById("finish").classList.remove("hidden");
-
-document.getElementById("finalArtem").textContent=
-scores.artem+"%";
-
-document.getElementById("finalEgor").textContent=
-scores.egor+"%";
-
+if(!answered)return;
+if(index<4){index++;render();return;}
+completed[person]=true;
+localStorage.setItem("completedTests",JSON.stringify(completed));
+document.getElementById("score").textContent=
+"Результат: "+points+"/5 ("+(points*20)+"%)";
+document.getElementById("resultText").textContent=
+points===5?"ИДЕАЛЬНО! ТЫ ЛЕГЕНДА 🏆":
+points>=3?"НЕПЛОХО! 😎":"АХАХА, ПОЗОР! 💀";
+show("result");
 confetti();
-
 }
 
+function home(){show("home")}
+
+function openSecret(){
+if(completed.artem&&completed.ilya){
+show("secret");confetti();
+}else{
+let left=(completed.artem?0:1)+(completed.ilya?0:1);
+alert("Секретный уровень закрыт! Осталось тестов: "+left);
+}
+}
+
+function settings(){
+let done=(completed.artem?1:0)+(completed.ilya?1:0);
+document.getElementById("done").textContent=done+"/2";
+document.getElementById("left").textContent=2-done;
+document.getElementById("settingsBar").style.width=(done*50)+"%";
+document.getElementById("hint").textContent=
+done===2?"МУСЯ ОТКРЫТА! 👀":"Пройди тесты Артёма и Ильи!";
+document.getElementById("settings").classList.remove("hidden");
+}
+
+function closeSettings(){
+document.getElementById("settings").classList.add("hidden");
+}
 
 function confetti(){
-
-const box=document.getElementById("confetti");
-
-const emojis=["💜","❤️","🎉","✨","🎮","⭐"];
-
-for(let i=0;i<45;i++){
-
-let particle=document.createElement("div");
-
-particle.className="particle";
-
-particle.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-
-particle.style.left=Math.random()*100+"%";
-
-particle.style.animationDelay=Math.random()*2+"s";
-
-box.appendChild(particle);
-
+let box=document.getElementById("confetti");
+let emojis=["💜","❤️","🎉","✨","⭐"];
+for(let i=0;i<35;i++){
+let p=document.createElement("div");
+p.className="particle";
+p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+p.style.left=Math.random()*100+"%";
+p.style.animationDelay=Math.random()*2+"s";
+box.appendChild(p);
+setTimeout(()=>p.remove(),4000);
 }
-
 }
-
 </script>
-
 </body>
 </html>
