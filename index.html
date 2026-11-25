@@ -3,316 +3,375 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Friendship Test 💀</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#210d38">
+<title>Friendship Test 💜</title>
 <style>
 *{box-sizing:border-box}
+:root{--pink:#ff65b7;--purple:#a879ff;--panel:#28183f}
 body{
-margin:0;padding:20px;color:white;text-align:center;
-font-family:Arial;background:linear-gradient(-45deg,#160d2b,#51265f,#21113e,#37205b);
-background-size:400% 400%;animation:bg 10s infinite;
+ margin:0;padding:16px;color:white;text-align:center;
+ font-family:Arial,sans-serif;min-height:100vh;
+ background:linear-gradient(-45deg,#160021,#48116a,#151044,#76245f);
+ background-size:400% 400%;animation:bg 13s ease infinite;
 }
-@keyframes bg{50%{background-position:100% 50%}}
-.card{
-max-width:650px;margin:25px auto;padding:22px;
-background:#261b40;border:1px solid #b995ff;
-border-radius:24px;box-shadow:0 10px 40px #0008;
-animation:show .5s;
-}
-@keyframes show{from{opacity:0;transform:translateY(20px)}to{opacity:1}}
-.hidden{display:none!important}
-h1{color:#ffafd1}
-h2{color:#ffe08a}
-p{color:#dfd1ef;line-height:1.5}
-button{
-border:0;border-radius:14px;padding:15px 20px;margin:7px;
-font-size:16px;font-weight:bold;cursor:pointer;
-background:linear-gradient(100deg,#ff91bd,#b995ff);
-color:#251333;transition:.2s;
-}
+@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+body.no-animations,body.no-animations *{animation:none!important;transition:none!important}
+button{font-size:16px;font-weight:bold;border:0;border-radius:15px;
+ padding:14px 19px;margin:6px;background:var(--purple);color:white;
+ cursor:pointer;box-shadow:0 5px 15px #0004;transition:.2s}
+button:hover{transform:translateY(-3px);filter:brightness(1.15)}
 button:active{transform:scale(.94)}
+.card{max-width:650px;margin:20px auto;padding:22px;
+ background:#28183feF;border:1px solid #b99bff;border-radius:24px;
+ box-shadow:0 10px 40px #0006;animation:appear .5s}
+@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+header{padding:15px 0}
+header h1{font-size:32px;text-shadow:0 0 20px var(--pink)}
+.update{position:fixed;right:10px;top:10px;background:#ff477e;
+ padding:9px 12px;border-radius:20px;font-size:11px;font-weight:bold;z-index:5}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.tile{background:#39245a;border:2px solid #9c76d5;border-radius:20px;
+ padding:12px;cursor:pointer;transition:.3s;overflow:hidden}
+.tile:hover{transform:translateY(-7px) scale(1.02);box-shadow:0 0 24px #d46bff88}
+.tile img{width:100%;height:145px;object-fit:cover;border-radius:14px}
+.tile h3{margin:10px 0 5px;font-size:17px}
+.tile p{font-size:12px;opacity:.8}
+.question{font-size:22px;font-weight:bold;margin:24px 0}
+.answer{display:block;width:100%;background:#513b75}
+.good{background:#159c65}.bad{background:#b52f55}
+.hidden{display:none!important}
+.big{font-size:23px;background:#ff4e9b;width:100%}
+.progress{background:#ffffff30;height:12px;border-radius:20px;overflow:hidden}
+.progress div{height:100%;background:linear-gradient(90deg,#ff65b7,#ffd0f0);
+ width:0;transition:.4s}
+.small{font-size:13px;opacity:.75}
+.secret{background:#573e24;border-color:#ffce55}
+.setting-row{background:#392650;border-radius:15px;padding:14px;
+ margin:10px 0;display:flex;align-items:center;justify-content:space-between;
+ gap:10px;text-align:left}
+.setting-row button{margin:0}
+.like{background:#e64d9b}
+.support{background:#9c65e9}
+.counter{font-size:27px;font-weight:bold;color:#ff9bd1}
+.modal{position:fixed;inset:0;background:#10001bee;z-index:10;
+ display:flex;align-items:center;justify-content:center;padding:20px}
+.modalbox{max-width:420px;width:100%;background:#392052;
+ border:2px solid #ff8bd0;border-radius:25px;padding:25px}
 #no{position:relative}
-.grid{
-display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0
-}
-.person{
-background:#38294f;border:1px solid #b995ff;
-border-radius:17px;padding:10px;cursor:pointer;
-}
-.person img,.questionmark{
-width:100%;height:160px;object-fit:cover;border-radius:12px;
-}
-.questionmark{
-display:flex;align-items:center;justify-content:center;
-font-size:65px;background:#493365;color:#ffe08a;
-}
-.person b{display:block;padding:10px}
-.secret{grid-column:1/-1;border:1px dashed #d5a5ff}
-.option{display:block;width:100%;background:#493365;color:white;border:2px solid #b995ff}
-.option.correct{background:#208b62}
-.option.wrong{background:#923454}
-#message{min-height:35px;color:#ffe08a}
-.progress{height:9px;background:#ffffff22;border-radius:20px;overflow:hidden}
-.progress div{height:100%;background:#ff91bd;width:0;transition:.3s}
-#settingsButton{position:fixed;bottom:12px;left:50%;transform:translateX(-50%)}
-.modal{
-position:fixed;inset:0;background:#090511dd;
-display:flex;align-items:center;justify-content:center;padding:20px;
-z-index:10
-}
-.modalbox{
-background:#261b40;border:1px solid #b995ff;
-border-radius:22px;padding:25px;width:100%;max-width:400px
-}
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
-.particle{position:absolute;top:-20px;animation:fall 3s linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(700deg);opacity:0}}
-@media(max-width:400px){
-.person img,.questionmark{height:125px}
-}
+.nav{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.nav button{font-size:13px;padding:11px}
+footer{opacity:.6;font-size:12px;padding:25px}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+ background:#302047;border:1px solid #b99bff;border-radius:20px;
+ padding:13px 20px;z-index:20;display:none;box-shadow:0 0 20px #0008}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:15;font-size:25px}
+@media(max-width:390px){.tile img{height:115px}header h1{font-size:26px}}
 </style>
 </head>
-
 <body>
 
+<div class="update" id="update"></div>
+<div id="toast"></div>
 <div id="confetti"></div>
 
-<div id="update" style="text-align:right;color:#ffe08a;font-size:13px">
-ОБНОВА ВЫШЛА
+<div id="welcome" class="modal">
+ <div class="modalbox">
+  <h1>💀 ВЫ ГОТОВЫ К ПОЗОРУ?</h1>
+  <p>Проверим, насколько хорошо ты знаешь своих друзей?</p>
+  <button onclick="start()">ДА 😈</button>
+  <button id="no">НЕТ</button>
+ </div>
 </div>
 
-<!-- ПРИВЕТСТВИЕ -->
-<div class="card" id="welcome">
-<h1>💀 ВЫ ГОТОВЫ К ПОЗОРУ?</h1>
-<p>Сейчас узнаем, насколько хорошо ты знаешь своих друзей.</p>
-<button onclick="enter()">ДА 🔥</button>
-<button id="no" onmouseover="runAway()" ontouchstart="runAway()" onclick="runAway()">НЕТ 😭</button>
+<header>
+ <h1>💜 FRIENDSHIP TEST 💜</h1>
+ <p>Проверь, насколько хорошо ты знаешь своих друзей!</p>
+</header>
+
+<div class="nav">
+ <button onclick="goHome()">🏠 Главная</button>
+ <button onclick="showSettings()">⚙️ Настройки</button>
 </div>
 
-<!-- ГЛАВНЫЙ ЭКРАН -->
-<div class="card hidden" id="home">
-<h1>FRIENDSHIP TEST</h1>
-<h2>ВЫБИРАЙ ИСПЫТАНИЕ 🤡</h2>
+<main id="home">
+ <div class="card">
+  <h2>ВЫБИРАЙ СВОЙ УРОВЕНЬ</h2>
+  <div class="grid">
+   <div class="tile" onclick="openQuiz('artem')">
+    <img src="IMG_0983.jpeg" alt="Артём">
+    <h3>1. АРТЁМ</h3>
+    <p>Начать тест 🔥</p>
+   </div>
+   <div class="tile" onclick="locked('Егор')">
+    <div style="font-size:100px;height:145px">❓</div>
+    <h3>2. ЕГОР</h3><p>Скоро...</p>
+   </div>
+   <div class="tile" onclick="openQuiz('ilya')">
+    <img src="ilya.jpg" alt="Илья">
+    <h3>3. ИЛЬЯ</h3><p>Начать тест 🔥</p>
+   </div>
+   <div class="tile" onclick="locked('Арих')">
+    <div style="font-size:100px;height:145px">❓</div>
+    <h3>4. АРИХ</h3><p>Скоро...</p>
+   </div>
+   <div class="tile secret" onclick="openSecret()">
+    <div style="font-size:95px;height:125px">🔒</div>
+    <h3>5. СЕКРЕТНЫЙ УРОВЕНЬ</h3>
+    <p>Муся 👑</p>
+   </div>
+  </div>
+ </div>
+</main>
 
-<div class="grid">
+<section id="quiz" class="card hidden">
+ <button onclick="goHome()">← Назад</button>
+ <h2 id="quizTitle"></h2>
+ <div class="progress"><div id="bar"></div></div>
+ <p id="counter"></p>
+ <div class="question" id="question"></div>
+ <div id="answers"></div>
+ <p id="feedback"></p>
+</section>
 
-<div class="person" onclick="start('artem')">
-<img src="artem.jpg" alt="Артём">
-<b>1. АРТЁМ</b>
-</div>
+<section id="settingsPage" class="card hidden">
+ <h2>⚙️ НАСТРОЙКИ</h2>
+ <p>Настройки и поддержка проекта</p>
+ <div class="setting-row">
+  <span>🔊 Звуковые эффекты</span>
+  <button id="soundBtn" onclick="toggleSound()">ВКЛ</button>
+ </div>
+ <div class="setting-row">
+  <span>✨ Анимации</span>
+  <button id="animBtn" onclick="toggleAnimations()">ВКЛ</button>
+ </div>
+ <hr style="border-color:#ffffff30">
+ <h2>❤️ ПОДДЕРЖКА АВТОРА</h2>
+ <p>Если тебе нравится сайт, поддержи его лайком!</p>
+ <div class="counter" id="likeCount">—</div>
+ <p class="small">Лайков у сайта</p>
+ <button class="like" id="likeBtn" onclick="giveLike()">❤️ ЛАЙКНУТЬ САЙТ</button>
+ <div class="counter" id="supportCount">—</div>
+ <p class="small">Поддержка автора</p>
+ <button class="support" onclick="supportAuthor()">💜 ПОДДЕРЖАТЬ АВТОРА</button>
+ <p class="small" id="likeStatus">Подключение счётчика...</p>
+ <hr style="border-color:#ffffff30">
+ <h2>🏆 ТВОЙ ПРОГРЕСС</h2>
+ <p>Пройдено тестов: <b id="doneCount">0</b> из 2</p>
+ <p>До секретного уровня осталось: <b id="leftCount">2</b></p>
+ <div class="progress"><div id="settingsBar"></div></div>
+ <p class="small">Версия сайта: 2.0</p>
+ <button class="bad" onclick="resetProgress()">СБРОСИТЬ ПРОГРЕСС</button>
+ <button onclick="goHome()">← НА ГЛАВНУЮ</button>
+</section>
 
-<div class="person" onclick="locked('Егор')">
-<div class="questionmark">❔</div>
-<b>2. ЕГОР</b>
-</div>
+<section id="secretPage" class="card hidden">
+ <h1>👑 МУСЯ 👑</h1>
+ <h2>ТЫ ОТКРЫЛ СЕКРЕТНЫЙ УРОВЕНЬ!</h2>
+ <p>Поздравляю! Ты прошёл оба испытания!</p>
+ <div style="font-size:70px">🎉💜🎊</div>
+ <button onclick="goHome()">НА ГЛАВНУЮ</button>
+</section>
 
-<div class="person" onclick="start('ilya')">
-<img src="ilya.jpg" alt="Илья">
-<b>3. ИЛЬЯ</b>
-</div>
-
-<div class="person" onclick="locked('Арих')">
-<div class="questionmark">❔</div>
-<b>4. АРИХ</b>
-</div>
-
-<div class="person secret" onclick="openSecret()">
-<div class="questionmark">❓</div>
-<b>5. СЕКРЕТНЫЙ УРОВЕНЬ</b>
-</div>
-
-</div>
-</div>
-
-<!-- ТЕСТ -->
-<div class="card hidden" id="game">
-<h2 id="title"></h2>
-<p id="number"></p>
-<div class="progress"><div id="bar"></div></div>
-<h2 id="question"></h2>
-<div id="answers"></div>
-<p id="message">Выбирай ответ 👆</p>
-<button id="next" class="hidden" onclick="next()">ДАЛЬШЕ →</button>
-<button onclick="home()">НАЗАД</button>
-</div>
-
-<!-- РЕЗУЛЬТАТ -->
-<div class="card hidden" id="result">
-<h1>🏆 ТЕСТ ПРОЙДЕН!</h1>
-<h2 id="score"></h2>
-<div id="resultText"></div>
-<button onclick="home()">К УРОВНЯМ</button>
-</div>
-
-<!-- СЕКРЕТ -->
-<div class="card hidden" id="secret">
-<h1>🔐 СЕКРЕТНЫЙ УРОВЕНЬ</h1>
-<h2>МУСЯ?! 💀</h2>
-<p>Поздравляем. Ты добрался до того, чего никто не должен был видеть.</p>
-<div style="font-size:65px">👀</div>
-<button onclick="home()">НАЗАД</button>
-</div>
-
-<button id="settingsButton" onclick="settings()">⚙️ НАСТРОЙКИ</button>
-
-<!-- НАСТРОЙКИ -->
-<div class="modal hidden" id="settings">
-<div class="modalbox">
-<h2>⚙️ НАСТРОЙКИ</h2>
-<p>Пройдено тестов: <b id="done">0/2</b></p>
-<p>Осталось до секретного: <b id="left">2</b></p>
-<div class="progress"><div id="settingsBar"></div></div>
-<p id="hint"></p>
-<button onclick="closeSettings()">ЗАКРЫТЬ</button>
-</div>
-</div>
+<footer>Friendship Test • Сделано с ❤️</footer>
 
 <script>
-document.getElementById("update").textContent =
-"ОБНОВА ВЫШЛА • "+new Date().toLocaleDateString("ru-RU",{day:"numeric",month:"long"}).toUpperCase();
+// НАСТРОЙКА ОБЩИХ ЛАЙКОВ SUPABASE
+// Вставь сюда URL проекта и публичный anon key из Supabase.
+const SUPABASE_URL = "ВСТАВЬ_URL_ПРОЕКТА";
+const SUPABASE_KEY = "ВСТАВЬ_ANON_KEY";
+
+let db=null;
+let countersReady=false;
+
+async function initLikes(){
+ const status=document.getElementById("likeStatus");
+ if(!SUPABASE_URL.startsWith("https://") || SUPABASE_KEY.startsWith("ВСТАВЬ")){
+  status.textContent="Общий счётчик пока не подключён. Нужна настройка базы.";
+  document.getElementById("likeCount").textContent="—";
+  document.getElementById("supportCount").textContent="—";
+  return;
+ }
+ try{
+  const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
+  db=createClient(SUPABASE_URL,SUPABASE_KEY);
+  await refreshCounters();
+  countersReady=true;
+  status.textContent="Общий счётчик подключён 💜";
+ }catch(e){
+  status.textContent="Не удалось подключить счётчик. Проверь настройки базы.";
+ }
+}
+
+async function refreshCounters(){
+ if(!db)return;
+ const {data,error}=await db.from("site_counters").select("*");
+ if(error)throw error;
+ const likes=data.find(x=>x.name==="likes");
+ const support=data.find(x=>x.name==="support");
+ document.getElementById("likeCount").textContent=likes?.count??0;
+ document.getElementById("supportCount").textContent=support?.count??0;
+}
+async function incrementCounter(name){
+ if(!db){toast("Сначала нужно подключить общий счётчик 💜");return}
+ try{
+  const {error}=await db.rpc("increment_counter",{counter_name:name});
+  if(error)throw error;
+  await refreshCounters();
+  toast(name==="likes"?"Спасибо за лайк! ❤️":"Спасибо за поддержку! 💜");
+ }catch(e){toast("Ошибка счётчика. Попробуй позже.");}
+}
+function giveLike(){incrementCounter("likes")}
+function supportAuthor(){incrementCounter("support")}
+
+document.getElementById("update").textContent=
+ "ОБНОВА ВЫШЛА • "+new Date().toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit"});
 
 const tests={
-artem:[
-["Какое моё хобби?",["Музыка 🎵","Игры 🎮"],0],
-["Какой мой самый любимый момент в школе?",["Как я иду в столовку","Как на меня орёт С.М. 😭"],1],
-["Чем я занимаюсь?",["Футбол ⚽","Регби 🏉"],1],
-["Что я не люблю?",["Когда перебивают","Когда не понимают, что сделали они"],1],
-["Что я обожаю всего на свете?",["СВОИХ ДРУЗЕЙ ❤️"],0]
-],
-ilya:[
-["Чем Илья занимается?",["Волейбол 🏐","Футбол ⚽"],0],
-["Какой самый лучший друг у Ильи?",["Муся","Максим"],1],
-["Что Илья любит в школе?",["Избивать Мусю 😂","Деградировать"],0],
-["Какая у Ильи любимая еда?",["Пицца (школьная) 🍕","Суп"],0],
-["Илья кэжуал или кал жувал?",["Кэжуал","Кал жувал 💀"],1]
-]
+ artem:[
+  {q:"Какое моё хобби?",a:["Музыка 🎵","Игры 🎮"],c:0},
+  {q:"Какой мой любимый момент в школе?",a:["Столовая 🍕","Как С.М. орёт 💀"],c:1},
+  {q:"Чем я занимаюсь?",a:["Футбол ⚽","Регби 🏉"],c:1},
+  {q:"Что я не люблю?",a:["Когда меня перебивают","Когда люди не понимают, что натворили"],c:1},
+  {q:"Что я обожаю больше всего?",a:["СВОИХ ДРУЗЕЙ ❤️"],c:0,big:true}
+ ],
+ ilya:[
+  {q:"Что я больше люблю?",a:["Волейбол 🏐","Футбол ⚽"],c:0},
+  {q:"Кто мой лучший друг?",a:["Муся","Максим"],c:1},
+  {q:"Что Илья любит в школе?",a:["Бить Мусю","Дегенерировать 💀"],c:0},
+  {q:"Какая любимая еда?",a:["Школьная пицца 🍕","Суп 🍲"],c:0},
+  {q:"Илья какой?",a:["Обычный","Кал жувал 💀"],c:1}
+ ]
 };
 
-let person="",index=0,points=0,answered=false;
-let completed=JSON.parse(localStorage.getItem("completedTests")||"{}");
+let current="",index=0,score=0;
+let completed=JSON.parse(localStorage.getItem("completedTests")||"[]");
+let soundOn=localStorage.getItem("soundOn")!=="false";
+let animationsOn=localStorage.getItem("animationsOn")!=="false";
 
-function show(id){
-["welcome","home","game","result","secret"].forEach(x=>
-document.getElementById(x).classList.toggle("hidden",x!==id));
-}
-
-function enter(){show("home")}
-
-function runAway(){
-let b=document.getElementById("no");
-b.style.position="fixed";
-b.style.left=Math.random()*(innerWidth-b.offsetWidth-20)+"px";
-b.style.top=Math.random()*(innerHeight-b.offsetHeight-20)+"px";
-b.style.zIndex=30;
-}
-
-function locked(name){
-alert(name+" пока под знаком вопроса ❔");
-}
-
-function start(who){
-person=who;index=0;points=0;
-show("game");render();
-}
-
-function render(){
-answered=false;
-let q=tests[person][index];
-document.getElementById("title").textContent=
-person==="artem"?"ТЕСТ АРТЁМА":"ТЕСТ ИЛЬИ";
-document.getElementById("number").textContent=
-"Вопрос "+(index+1)+" из 5";
-document.getElementById("question").textContent=q[0];
-document.getElementById("message").textContent="Выбирай ответ 👆";
-document.getElementById("bar").style.width=(index/5*100)+"%";
-document.getElementById("next").classList.add("hidden");
-
-let box=document.getElementById("answers");
-box.innerHTML="";
-q[1].forEach((answer,i)=>{
-let b=document.createElement("button");
-b.className="option";
-b.textContent=answer;
-b.onclick=()=>choose(i,b);
-box.appendChild(b);
+function start(){document.getElementById("welcome").classList.add("hidden")}
+document.getElementById("no").addEventListener("pointerenter",ev=>{
+ const b=ev.currentTarget;
+ b.style.position="fixed";
+ b.style.left=Math.random()*65+"vw";
+ b.style.top=Math.random()*65+"vh";
 });
-}
+document.getElementById("no").onclick=ev=>{
+ ev.currentTarget.style.left=Math.random()*65+"vw";
+ ev.currentTarget.style.top=Math.random()*65+"vh";
+};
 
-function choose(i,button){
-if(answered)return;
-answered=true;
-let q=tests[person][index];
-let buttons=document.querySelectorAll(".option");
-buttons.forEach((b,n)=>{
-b.disabled=true;
-if(n===q[2])b.classList.add("correct");
-});
-if(i===q[2]){
-points++;
-document.getElementById("message").textContent="ПРАВИЛЬНО! 🔥";
-}else{
-button.classList.add("wrong");
-document.getElementById("message").textContent="НЕПРАВИЛЬНО 😂";
+function hideAll(){
+ ["home","quiz","settingsPage","secretPage"].forEach(id=>
+ document.getElementById(id).classList.add("hidden"));
 }
-document.getElementById("bar").style.width=((index+1)/5*100)+"%";
-document.getElementById("next").classList.remove("hidden");
-document.getElementById("next").textContent=
-index===4?"ЗАВЕРШИТЬ 🏆":"ДАЛЬШЕ →";
+function goHome(){hideAll();document.getElementById("home").classList.remove("hidden")}
+function openQuiz(name){
+ start();current=name;index=0;score=0;
+ hideAll();document.getElementById("quiz").classList.remove("hidden");
+ document.getElementById("quizTitle").textContent=
+ name==="artem"?"ТЕСТ ПРО АРТЁМА":"ТЕСТ ПРО ИЛЬЮ";
+ showQuestion();
 }
-
-function next(){
-if(!answered)return;
-if(index<4){index++;render();return;}
-completed[person]=true;
-localStorage.setItem("completedTests",JSON.stringify(completed));
-document.getElementById("score").textContent=
-"Результат: "+points+"/5 ("+(points*20)+"%)";
-document.getElementById("resultText").textContent=
-points===5?"ИДЕАЛЬНО! ТЫ ЛЕГЕНДА 🏆":
-points>=3?"НЕПЛОХО! 😎":"АХАХА, ПОЗОР! 💀";
-show("result");
-confetti();
+function showQuestion(){
+ let q=tests[current][index];
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("counter").textContent="Вопрос "+(index+1)+" из 5";
+ document.getElementById("bar").style.width=(index/5*100)+"%";
+ document.getElementById("feedback").textContent="";
+ let box=document.getElementById("answers");box.innerHTML="";
+ q.a.forEach((answer,i)=>{
+  let b=document.createElement("button");
+  b.textContent=answer;b.className="answer"+(q.big?" big":"");
+  b.onclick=()=>choose(i);box.appendChild(b);
+ });
 }
-
-function home(){show("home")}
-
+function choose(choice){
+ let q=tests[current][index],box=document.getElementById("answers");
+ [...box.children].forEach((b,i)=>{
+  b.disabled=true;
+  if(i===q.c)b.classList.add("good");
+  else if(i===choice)b.classList.add("bad");
+ });
+ if(choice===q.c){score++;if(soundOn)beep(700)}
+ else if(soundOn)beep(180);
+ document.getElementById("feedback").textContent=
+ choice===q.c?"ПРАВИЛЬНО! 🔥":"НЕПРАВИЛЬНО 💀";
+ let next=document.createElement("button");
+ next.textContent=index===4?"ЗАВЕРШИТЬ":"ДАЛЬШЕ →";
+ next.onclick=()=>{index++;if(index<5)showQuestion();else finish()};
+ box.appendChild(next);
+}
+function finish(){
+ if(!completed.includes(current)){
+  completed.push(current);
+  localStorage.setItem("completedTests",JSON.stringify(completed));
+ }
+ document.getElementById("question").textContent="ТЕСТ ЗАВЕРШЁН! 🎉";
+ document.getElementById("counter").textContent="Твой результат: "+score+" из 5";
+ document.getElementById("bar").style.width="100%";
+ document.getElementById("answers").innerHTML=
+ '<button onclick="goHome()">НА ГЛАВНУЮ</button>';
+ document.getElementById("feedback").textContent="Спасибо за прохождение!";
+ confetti();
+}
+function locked(name){toast(name+" пока под вопросом ❓")}
+function showSettings(){
+ start();hideAll();
+ document.getElementById("settingsPage").classList.remove("hidden");
+ let n=completed.length;
+ document.getElementById("doneCount").textContent=n;
+ document.getElementById("leftCount").textContent=2-n;
+ document.getElementById("settingsBar").style.width=(n/2*100)+"%";
+ document.getElementById("soundBtn").textContent=soundOn?"ВКЛ":"ВЫКЛ";
+ document.getElementById("animBtn").textContent=animationsOn?"ВКЛ":"ВЫКЛ";
+}
+function toggleSound(){
+ soundOn=!soundOn;localStorage.setItem("soundOn",soundOn);
+ document.getElementById("soundBtn").textContent=soundOn?"ВКЛ":"ВЫКЛ";
+ toast("Звук "+(soundOn?"включён":"выключен"));
+}
+function toggleAnimations(){
+ animationsOn=!animationsOn;
+ localStorage.setItem("animationsOn",animationsOn);
+ document.body.classList.toggle("no-animations",!animationsOn);
+ document.getElementById("animBtn").textContent=animationsOn?"ВКЛ":"ВЫКЛ";
+}
 function openSecret(){
-if(completed.artem&&completed.ilya){
-show("secret");confetti();
-}else{
-let left=(completed.artem?0:1)+(completed.ilya?0:1);
-alert("Секретный уровень закрыт! Осталось тестов: "+left);
+ if(completed.includes("artem")&&completed.includes("ilya")){
+  hideAll();document.getElementById("secretPage").classList.remove("hidden");
+  confetti();
+ }else toast("Секретный уровень закрыт! Пройди тесты Артёма и Ильи 🔒");
 }
+function resetProgress(){
+ if(confirm("Точно сбросить прогресс?")){
+  completed=[];
+  localStorage.setItem("completedTests","[]");
+  showSettings();toast("Прогресс сброшен");
+ }
 }
-
-function settings(){
-let done=(completed.artem?1:0)+(completed.ilya?1:0);
-document.getElementById("done").textContent=done+"/2";
-document.getElementById("left").textContent=2-done;
-document.getElementById("settingsBar").style.width=(done*50)+"%";
-document.getElementById("hint").textContent=
-done===2?"МУСЯ ОТКРЫТА! 👀":"Пройди тесты Артёма и Ильи!";
-document.getElementById("settings").classList.remove("hidden");
-}
-
-function closeSettings(){
-document.getElementById("settings").classList.add("hidden");
-}
-
 function confetti(){
-let box=document.getElementById("confetti");
-let emojis=["💜","❤️","🎉","✨","⭐"];
-for(let i=0;i<35;i++){
-let p=document.createElement("div");
-p.className="particle";
-p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
-p.style.left=Math.random()*100+"%";
-p.style.animationDelay=Math.random()*2+"s";
-box.appendChild(p);
-setTimeout(()=>p.remove(),4000);
+ let c=document.getElementById("confetti");
+ c.textContent="🎉 ✨ 🎊 💜 ✨ 🎉";
+ setTimeout(()=>c.textContent="",2500);
 }
+function toast(message){
+ let t=document.getElementById("toast");
+ t.textContent=message;t.style.display="block";
+ clearTimeout(window.toastTimer);
+ window.toastTimer=setTimeout(()=>t.style.display="none",2600);
 }
+function beep(freq){
+ try{
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.frequency.value=freq;gain.gain.value=.04;
+  osc.connect(gain);gain.connect(ctx.destination);
+  osc.start();osc.stop(ctx.currentTime+.12);
+ }catch(e){}
+}
+document.body.classList.toggle("no-animations",!animationsOn);
+initLikes();
 </script>
 </body>
 </html>
