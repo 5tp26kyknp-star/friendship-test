@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,81 +5,222 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#210d38">
 <title>Friendship Test 💜</title>
+
 <style>
 *{box-sizing:border-box}
 :root{--pink:#ff65b7;--purple:#a879ff;--panel:#28183f}
+
 body{
  margin:0;padding:16px;color:white;text-align:center;
  font-family:Arial,sans-serif;min-height:100vh;
  background:linear-gradient(-45deg,#160021,#48116a,#151044,#76245f);
  background-size:400% 400%;animation:bg 13s ease infinite;
 }
-@keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
-body.no-animations,body.no-animations *{animation:none!important;transition:none!important}
-button{font-size:16px;font-weight:bold;border:0;border-radius:15px;
+@keyframes bg{
+ 0%,100%{background-position:0 50%}
+ 50%{background-position:100% 50%}
+}
+body.no-animations,body.no-animations *{
+ animation:none!important;transition:none!important
+}
+
+button{
+ font-size:16px;font-weight:bold;border:0;border-radius:15px;
  padding:14px 19px;margin:6px;background:var(--purple);color:white;
- cursor:pointer;box-shadow:0 5px 15px #0004;transition:.2s}
+ cursor:pointer;box-shadow:0 5px 15px #0004;transition:.2s
+}
 button:hover{transform:translateY(-3px);filter:brightness(1.15)}
 button:active{transform:scale(.94)}
-.card{max-width:650px;margin:20px auto;padding:22px;
- background:#28183feF;border:1px solid #b99bff;border-radius:24px;
- box-shadow:0 10px 40px #0006;animation:appear .5s}
-@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+button:disabled{opacity:.6;cursor:default}
+
+.card{
+ max-width:650px;margin:20px auto;padding:22px;
+ background:#28183fef;border:1px solid #b99bff;border-radius:24px;
+ box-shadow:0 10px 40px #0006;animation:appear .5s
+}
+@keyframes appear{
+ from{opacity:0;transform:translateY(15px)}
+ to{opacity:1;transform:none}
+}
+
 header{padding:15px 0}
 header h1{font-size:32px;text-shadow:0 0 20px var(--pink)}
-.update{position:fixed;right:10px;top:10px;background:#ff477e;
- padding:9px 12px;border-radius:20px;font-size:11px;font-weight:bold;z-index:5}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-.tile{background:#39245a;border:2px solid #9c76d5;border-radius:20px;
- padding:12px;cursor:pointer;transition:.3s;overflow:hidden}
-.tile:hover{transform:translateY(-7px) scale(1.02);box-shadow:0 0 24px #d46bff88}
-.tile img{width:100%;height:145px;object-fit:cover;border-radius:14px}
+
+.update{
+ position:fixed;right:10px;top:10px;background:#ff477e;
+ padding:9px 12px;border-radius:20px;font-size:11px;
+ font-weight:bold;z-index:5;cursor:pointer;
+ box-shadow:0 4px 15px #0005;transition:.2s
+}
+.update:hover{transform:scale(1.06)}
+
+.grid{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px
+}
+.tile{
+ background:#39245a;border:2px solid #9c76d5;border-radius:20px;
+ padding:12px;cursor:pointer;transition:.3s;overflow:hidden
+}
+.tile:hover{
+ transform:translateY(-7px) scale(1.02);
+ box-shadow:0 0 24px #d46bff88
+}
+.tile img{
+ width:100%;height:145px;object-fit:cover;border-radius:14px
+}
 .tile h3{margin:10px 0 5px;font-size:17px}
 .tile p{font-size:12px;opacity:.8}
+
 .question{font-size:22px;font-weight:bold;margin:24px 0}
 .answer{display:block;width:100%;background:#513b75}
 .good{background:#159c65}.bad{background:#b52f55}
 .hidden{display:none!important}
 .big{font-size:23px;background:#ff4e9b;width:100%}
-.progress{background:#ffffff30;height:12px;border-radius:20px;overflow:hidden}
-.progress div{height:100%;background:linear-gradient(90deg,#ff65b7,#ffd0f0);
- width:0;transition:.4s}
+
+.progress{
+ background:#ffffff30;height:12px;border-radius:20px;overflow:hidden
+}
+.progress div{
+ height:100%;background:linear-gradient(90deg,#ff65b7,#ffd0f0);
+ width:0;transition:.4s
+}
+
 .small{font-size:13px;opacity:.75}
 .secret{background:#573e24;border-color:#ffce55}
-.setting-row{background:#392650;border-radius:15px;padding:14px;
- margin:10px 0;display:flex;align-items:center;justify-content:space-between;
- gap:10px;text-align:left}
+.setting-row{
+ background:#392650;border-radius:15px;padding:14px;
+ margin:10px 0;display:flex;align-items:center;
+ justify-content:space-between;gap:10px;text-align:left
+}
 .setting-row button{margin:0}
 .like{background:#e64d9b}
 .support{background:#9c65e9}
 .counter{font-size:27px;font-weight:bold;color:#ff9bd1}
-.modal{position:fixed;inset:0;background:#10001bee;z-index:10;
- display:flex;align-items:center;justify-content:center;padding:20px}
-.modalbox{max-width:420px;width:100%;background:#392052;
- border:2px solid #ff8bd0;border-radius:25px;padding:25px}
+
+.modal{
+ position:fixed;inset:0;background:#10001bee;z-index:10;
+ display:flex;align-items:center;justify-content:center;padding:20px
+}
+.modalbox{
+ max-width:420px;width:100%;background:#392052;
+ border:2px solid #ff8bd0;border-radius:25px;padding:25px;
+ animation:appear .3s
+}
+
 #no{position:relative}
 .nav{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
 .nav button{font-size:13px;padding:11px}
-footer{opacity:.6;font-size:12px;padding:25px}
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+footer{opacity:.7;font-size:12px;padding:25px}
+footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
+footer a:hover{text-decoration:underline}
+
+#toast{
+ position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
  background:#302047;border:1px solid #b99bff;border-radius:20px;
- padding:13px 20px;z-index:20;display:none;box-shadow:0 0 20px #0008}
-#confetti{position:fixed;inset:0;pointer-events:none;z-index:15;font-size:25px}
-@media(max-width:390px){.tile img{height:115px}header h1{font-size:26px}}
+ padding:13px 20px;z-index:30;display:none;box-shadow:0 0 20px #0008;
+ max-width:90%
+}
+#confetti{
+ position:fixed;inset:0;pointer-events:none;z-index:15;font-size:25px
+}
+
+#updatesModal{z-index:25}
+.updates-box{
+ max-width:390px;width:100%;min-height:330px;
+ background:linear-gradient(145deg,#392052,#241236);
+ border:2px solid #ff8bd0;border-radius:25px;
+ padding:24px 20px;box-shadow:0 0 35px #ff65b755;
+ animation:appear .3s
+}
+.update-date{
+ color:#ff9bd1;font-size:14px;font-weight:bold;
+ letter-spacing:1px;margin-bottom:15px
+}
+.update-page-title{font-size:24px;margin:12px 0 20px}
+.update-list{
+ list-style:none;padding:0;margin:0 auto 20px;
+ text-align:left;display:inline-block
+}
+.update-list li{
+ margin:12px 0;font-size:16px
+}
+.update-list li::before{content:"✨ ";color:#ff9bd1}
+.update-navigation{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;margin-top:20px
+}
+.update-navigation button{margin:0;padding:11px 17px}
+#updatePageNumber{font-size:12px;opacity:.7}
+
+#loadingModal{z-index:40;background:#10001bf2}
+.loading-box{
+ width:100%;max-width:330px;padding:30px 20px;
+ background:#392052;border:2px solid #ff8bd0;
+ border-radius:25px;animation:appear .3s
+}
+.spinner{
+ width:65px;height:65px;border:6px solid #ffffff25;
+ border-top-color:#ff65b7;border-right-color:#a879ff;
+ border-radius:50%;margin:20px auto;
+ animation:spin .8s linear infinite
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{
+ font-size:18px;font-weight:bold;color:#ffb5df
+}
+
+@media(max-width:390px){
+ .tile img{height:115px}
+ header h1{font-size:26px}
+ .updates-box{padding:20px 15px}
+}
 </style>
 </head>
+
 <body>
 
-<div class="update" id="update"></div>
+<div class="update" id="update" onclick="openUpdates()">
+ ОБНОВЛЕНО 26.11
+</div>
+
 <div id="toast"></div>
 <div id="confetti"></div>
 
+<!-- ПРИВЕТСТВИЕ -->
 <div id="welcome" class="modal">
  <div class="modalbox">
   <h1>💀 ВЫ ГОТОВЫ К ПОЗОРУ?</h1>
   <p>Проверим, насколько хорошо ты знаешь своих друзей?</p>
   <button onclick="start()">ДА 😈</button>
   <button id="no">НЕТ</button>
+ </div>
+</div>
+
+<!-- ОКНО ОБНОВЛЕНИЙ -->
+<div id="updatesModal" class="modal hidden" onclick="closeUpdatesOutside(event)">
+ <div class="updates-box">
+  <div class="update-date" id="updateDate">23.11</div>
+  <h2 class="update-page-title" id="updatePageTitle">Обновление 1</h2>
+  <ul class="update-list" id="updateList"></ul>
+
+  <div class="update-navigation">
+   <button onclick="changeUpdate(-1)">←</button>
+   <span id="updatePageNumber">1 / 3</span>
+   <button onclick="changeUpdate(1)">→</button>
+  </div>
+
+  <button onclick="closeUpdates()" style="width:100%;margin-top:16px">
+   ЗАКРЫТЬ
+  </button>
+ </div>
+</div>
+
+<!-- ЗАГРУЗКА -->
+<div id="loadingModal" class="modal hidden">
+ <div class="loading-box">
+  <div class="spinner"></div>
+  <div class="loading-text">Загрузка теста...</div>
+  <p class="small">Подготавливаем вопросы 💜</p>
  </div>
 </div>
 
@@ -94,36 +234,48 @@ footer{opacity:.6;font-size:12px;padding:25px}
  <button onclick="showSettings()">⚙️ Настройки</button>
 </div>
 
+<!-- ГЛАВНАЯ -->
 <main id="home">
  <div class="card">
   <h2>ВЫБИРАЙ СВОЙ УРОВЕНЬ</h2>
+
   <div class="grid">
+
    <div class="tile" onclick="openQuiz('artem')">
     <img src="IMG_0983.jpeg" alt="Артём">
     <h3>1. АРТЁМ</h3>
     <p>Начать тест 🔥</p>
    </div>
+
    <div class="tile" onclick="locked('Егор')">
     <div style="font-size:100px;height:145px">❓</div>
-    <h3>2. ЕГОР</h3><p>Скоро...</p>
+    <h3>2. ЕГОР</h3>
+    <p>Скоро...</p>
    </div>
+
    <div class="tile" onclick="openQuiz('ilya')">
     <img src="ilya.jpg" alt="Илья">
-    <h3>3. ИЛЬЯ</h3><p>Начать тест 🔥</p>
+    <h3>3. ИЛЬЯ</h3>
+    <p>Начать тест 🔥</p>
    </div>
+
    <div class="tile" onclick="locked('Арих')">
     <div style="font-size:100px;height:145px">❓</div>
-    <h3>4. АРИХ</h3><p>Скоро...</p>
+    <h3>4. АРИХ</h3>
+    <p>Скоро...</p>
    </div>
+
    <div class="tile secret" onclick="openSecret()">
     <div style="font-size:95px;height:125px">🔒</div>
     <h3>5. СЕКРЕТНЫЙ УРОВЕНЬ</h3>
     <p>Муся 👑</p>
    </div>
+
   </div>
  </div>
 </main>
 
+<!-- ТЕСТ -->
 <section id="quiz" class="card hidden">
  <button onclick="goHome()">← Назад</button>
  <h2 id="quizTitle"></h2>
@@ -134,50 +286,72 @@ footer{opacity:.6;font-size:12px;padding:25px}
  <p id="feedback"></p>
 </section>
 
+<!-- НАСТРОЙКИ -->
 <section id="settingsPage" class="card hidden">
  <h2>⚙️ НАСТРОЙКИ</h2>
  <p>Настройки и поддержка проекта</p>
+
  <div class="setting-row">
   <span>🔊 Звуковые эффекты</span>
   <button id="soundBtn" onclick="toggleSound()">ВКЛ</button>
  </div>
+
  <div class="setting-row">
   <span>✨ Анимации</span>
   <button id="animBtn" onclick="toggleAnimations()">ВКЛ</button>
  </div>
+
  <hr style="border-color:#ffffff30">
+
  <h2>❤️ ПОДДЕРЖКА АВТОРА</h2>
  <p>Если тебе нравится сайт, поддержи его лайком!</p>
+
  <div class="counter" id="likeCount">—</div>
  <p class="small">Лайков у сайта</p>
  <button class="like" id="likeBtn" onclick="giveLike()">❤️ ЛАЙКНУТЬ САЙТ</button>
+
  <div class="counter" id="supportCount">—</div>
  <p class="small">Поддержка автора</p>
  <button class="support" onclick="supportAuthor()">💜 ПОДДЕРЖАТЬ АВТОРА</button>
+
  <p class="small" id="likeStatus">Подключение счётчика...</p>
+
  <hr style="border-color:#ffffff30">
+
  <h2>🏆 ТВОЙ ПРОГРЕСС</h2>
- <p>Пройдено тестов: <b id="doneCount">0</b> из 2</p>
- <p>До секретного уровня осталось: <b id="leftCount">2</b></p>
+ <p>Пройдено тестов: <b id="doneCount">0</b> из 4</p>
+ <p>До секретного уровня осталось: <b id="leftCount">4</b></p>
  <div class="progress"><div id="settingsBar"></div></div>
+
  <p class="small">Версия сайта: 2.0</p>
+
+ <button onclick="openUpdates()">📋 СПИСОК ОБНОВЛЕНИЙ</button>
+ <br>
  <button class="bad" onclick="resetProgress()">СБРОСИТЬ ПРОГРЕСС</button>
  <button onclick="goHome()">← НА ГЛАВНУЮ</button>
 </section>
 
+<!-- СЕКРЕТНЫЙ УРОВЕНЬ -->
 <section id="secretPage" class="card hidden">
  <h1>👑 МУСЯ 👑</h1>
  <h2>ТЫ ОТКРЫЛ СЕКРЕТНЫЙ УРОВЕНЬ!</h2>
- <p>Поздравляю! Ты прошёл оба испытания!</p>
+ <p>Поздравляю! Ты прошёл четыре испытания!</p>
  <div style="font-size:70px">🎉💜🎊</div>
  <button onclick="goHome()">НА ГЛАВНУЮ</button>
 </section>
 
-<footer>Friendship Test • Сделано с ❤️</footer>
+<footer>
+ Friendship Test • Сделано с ❤️
+ <br>
+ Создатель:
+ <a href="https://t.me/beamer_trac1" target="_blank" rel="noopener">
+  @beamer_trac1
+ </a>
+</footer>
 
 <script>
-// НАСТРОЙКА ОБЩИХ ЛАЙКОВ SUPABASE
-// Вставь сюда URL проекта и публичный anon key из Supabase.
+
+// ОБЩИЕ ЛАЙКИ SUPABASE
 const SUPABASE_URL = "ВСТАВЬ_URL_ПРОЕКТА";
 const SUPABASE_KEY = "ВСТАВЬ_ANON_KEY";
 
@@ -186,12 +360,15 @@ let countersReady=false;
 
 async function initLikes(){
  const status=document.getElementById("likeStatus");
- if(!SUPABASE_URL.startsWith("https://") || SUPABASE_KEY.startsWith("ВСТАВЬ")){
+
+ if(!SUPABASE_URL.startsWith("https://") ||
+    SUPABASE_KEY.startsWith("ВСТАВЬ")){
   status.textContent="Общий счётчик пока не подключён. Нужна настройка базы.";
   document.getElementById("likeCount").textContent="—";
   document.getElementById("supportCount").textContent="—";
   return;
  }
+
  try{
   const {createClient}=await import("https://esm.sh/@supabase/supabase-js@2");
   db=createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -205,28 +382,117 @@ async function initLikes(){
 
 async function refreshCounters(){
  if(!db)return;
+
  const {data,error}=await db.from("site_counters").select("*");
  if(error)throw error;
+
  const likes=data.find(x=>x.name==="likes");
  const support=data.find(x=>x.name==="support");
+
  document.getElementById("likeCount").textContent=likes?.count??0;
  document.getElementById("supportCount").textContent=support?.count??0;
 }
+
 async function incrementCounter(name){
- if(!db){toast("Сначала нужно подключить общий счётчик 💜");return}
+ if(!db){
+  toast("Сначала нужно подключить общий счётчик 💜");
+  return;
+ }
+
  try{
   const {error}=await db.rpc("increment_counter",{counter_name:name});
   if(error)throw error;
+
   await refreshCounters();
+
   toast(name==="likes"?"Спасибо за лайк! ❤️":"Спасибо за поддержку! 💜");
- }catch(e){toast("Ошибка счётчика. Попробуй позже.");}
+ }catch(e){
+  toast("Ошибка счётчика. Попробуй позже.");
+ }
 }
+
 function giveLike(){incrementCounter("likes")}
 function supportAuthor(){incrementCounter("support")}
 
-document.getElementById("update").textContent=
- "ОБНОВА ВЫШЛА • "+new Date().toLocaleDateString("ru-RU",{day:"2-digit",month:"2-digit"});
 
+// СПИСОК ОБНОВЛЕНИЙ
+const updates=[
+ {
+  date:"23.11",
+  title:"Обновление 1",
+  items:[
+   "Тест",
+   "Интерфейс",
+   "Начало сайта"
+  ]
+ },
+ {
+  date:"24.11",
+  title:"Обновление 2",
+  items:[
+   "Два теста",
+   "Новый интерфейс",
+   "Новые анимации",
+   "Настройки"
+  ]
+ },
+ {
+  date:"26.11",
+  title:"Обновление 3",
+  items:[
+   "Новый интерфейс",
+   "Загрузочный фон",
+   "Изменения в настройках",
+   "Список обновлений"
+  ]
+ }
+];
+
+let updateIndex=0;
+
+function openUpdates(){
+ updateIndex=0;
+ renderUpdate();
+ document.getElementById("updatesModal").classList.remove("hidden");
+}
+
+function closeUpdates(){
+ document.getElementById("updatesModal").classList.add("hidden");
+}
+
+function closeUpdatesOutside(event){
+ if(event.target.id==="updatesModal")closeUpdates();
+}
+
+function changeUpdate(direction){
+ updateIndex+=direction;
+
+ if(updateIndex<0)updateIndex=updates.length-1;
+ if(updateIndex>=updates.length)updateIndex=0;
+
+ renderUpdate();
+}
+
+function renderUpdate(){
+ const update=updates[updateIndex];
+
+ document.getElementById("updateDate").textContent=update.date;
+ document.getElementById("updatePageTitle").textContent=update.title;
+ document.getElementById("updatePageNumber").textContent=
+  (updateIndex+1)+" / "+updates.length;
+
+ const list=document.getElementById("updateList");
+ list.innerHTML="";
+
+ update.items.forEach(item=>{
+  const li=document.createElement("li");
+  li.textContent=item;
+  list.appendChild(li);
+ });
+}
+
+
+// ТЕСТЫ
 const tests={
  artem:[
   {q:"Какое моё хобби?",a:["Музыка 🎵","Игры 🎮"],c:0},
@@ -245,133 +511,265 @@ const tests={
 };
 
 let current="",index=0,score=0;
+
 let completed=JSON.parse(localStorage.getItem("completedTests")||"[]");
 let soundOn=localStorage.getItem("soundOn")!=="false";
 let animationsOn=localStorage.getItem("animationsOn")!=="false";
 
-function start(){document.getElementById("welcome").classList.add("hidden")}
+
+// ПРИВЕТСТВИЕ
+function start(){
+ document.getElementById("welcome").classList.add("hidden");
+}
+
 document.getElementById("no").addEventListener("pointerenter",ev=>{
  const b=ev.currentTarget;
  b.style.position="fixed";
  b.style.left=Math.random()*65+"vw";
  b.style.top=Math.random()*65+"vh";
 });
+
 document.getElementById("no").onclick=ev=>{
  ev.currentTarget.style.left=Math.random()*65+"vw";
  ev.currentTarget.style.top=Math.random()*65+"vh";
 };
 
+
+// ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
 function hideAll(){
- ["home","quiz","settingsPage","secretPage"].forEach(id=>
- document.getElementById(id).classList.add("hidden"));
-}
-function goHome(){hideAll();document.getElementById("home").classList.remove("hidden")}
-function openQuiz(name){
- start();current=name;index=0;score=0;
- hideAll();document.getElementById("quiz").classList.remove("hidden");
- document.getElementById("quizTitle").textContent=
- name==="artem"?"ТЕСТ ПРО АРТЁМА":"ТЕСТ ПРО ИЛЬЮ";
- showQuestion();
-}
-function showQuestion(){
- let q=tests[current][index];
- document.getElementById("question").textContent=q.q;
- document.getElementById("counter").textContent="Вопрос "+(index+1)+" из 5";
- document.getElementById("bar").style.width=(index/5*100)+"%";
- document.getElementById("feedback").textContent="";
- let box=document.getElementById("answers");box.innerHTML="";
- q.a.forEach((answer,i)=>{
-  let b=document.createElement("button");
-  b.textContent=answer;b.className="answer"+(q.big?" big":"");
-  b.onclick=()=>choose(i);box.appendChild(b);
+ ["home","quiz","settingsPage","secretPage"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
  });
 }
+
+function goHome(){
+ hideAll();
+ document.getElementById("home").classList.remove("hidden");
+}
+
+
+// ОТКРЫТИЕ ТЕСТА С ЗАГРУЗКОЙ
+function openQuiz(name){
+ start();
+
+ current=name;
+ index=0;
+ score=0;
+
+ hideAll();
+
+ document.getElementById("loadingModal").classList.remove("hidden");
+
+ setTimeout(()=>{
+  document.getElementById("loadingModal").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+
+  document.getElementById("quizTitle").textContent=
+   name==="artem"?"ТЕСТ ПРО АРТЁМА":"ТЕСТ ПРО ИЛЬЮ";
+
+  showQuestion();
+ },1400);
+}
+
+
+// ВОПРОСЫ
+function showQuestion(){
+ let q=tests[current][index];
+
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("counter").textContent=
+  "Вопрос "+(index+1)+" из 5";
+
+ document.getElementById("bar").style.width=(index/5*100)+"%";
+ document.getElementById("feedback").textContent="";
+
+ let box=document.getElementById("answers");
+ box.innerHTML="";
+
+ q.a.forEach((answer,i)=>{
+  let b=document.createElement("button");
+  b.textContent=answer;
+  b.className="answer"+(q.big?" big":"");
+  b.onclick=()=>choose(i);
+  box.appendChild(b);
+ });
+}
+
 function choose(choice){
- let q=tests[current][index],box=document.getElementById("answers");
+ let q=tests[current][index];
+ let box=document.getElementById("answers");
+
  [...box.children].forEach((b,i)=>{
   b.disabled=true;
+
   if(i===q.c)b.classList.add("good");
   else if(i===choice)b.classList.add("bad");
  });
- if(choice===q.c){score++;if(soundOn)beep(700)}
- else if(soundOn)beep(180);
+
+ if(choice===q.c){
+  score++;
+  if(soundOn)beep(700);
+ }else{
+  if(soundOn)beep(180);
+ }
+
  document.getElementById("feedback").textContent=
- choice===q.c?"ПРАВИЛЬНО! 🔥":"НЕПРАВИЛЬНО 💀";
+  choice===q.c?"ПРАВИЛЬНО! 🔥":"НЕПРАВИЛЬНО 💀";
+
  let next=document.createElement("button");
  next.textContent=index===4?"ЗАВЕРШИТЬ":"ДАЛЬШЕ →";
- next.onclick=()=>{index++;if(index<5)showQuestion();else finish()};
+
+ next.onclick=()=>{
+  index++;
+  if(index<5)showQuestion();
+  else finish();
+ };
+
  box.appendChild(next);
 }
+
 function finish(){
  if(!completed.includes(current)){
   completed.push(current);
   localStorage.setItem("completedTests",JSON.stringify(completed));
  }
+
  document.getElementById("question").textContent="ТЕСТ ЗАВЕРШЁН! 🎉";
- document.getElementById("counter").textContent="Твой результат: "+score+" из 5";
+ document.getElementById("counter").textContent=
+  "Твой результат: "+score+" из 5";
+
  document.getElementById("bar").style.width="100%";
  document.getElementById("answers").innerHTML=
- '<button onclick="goHome()">НА ГЛАВНУЮ</button>';
- document.getElementById("feedback").textContent="Спасибо за прохождение!";
+  '<button onclick="goHome()">НА ГЛАВНУЮ</button>';
+
+ document.getElementById("feedback").textContent=
+  "Спасибо за прохождение!";
+
  confetti();
 }
-function locked(name){toast(name+" пока под вопросом ❓")}
+
+
+// ЗАБЛОКИРОВАННЫЕ ТЕСТЫ
+function locked(name){
+ toast(name+" пока под вопросом ❓");
+}
+
+
+// НАСТРОЙКИ
 function showSettings(){
- start();hideAll();
+ start();
+ hideAll();
+
  document.getElementById("settingsPage").classList.remove("hidden");
+
  let n=completed.length;
+
  document.getElementById("doneCount").textContent=n;
- document.getElementById("leftCount").textContent=2-n;
- document.getElementById("settingsBar").style.width=(n/2*100)+"%";
+ document.getElementById("leftCount").textContent=Math.max(0,4-n);
+ document.getElementById("settingsBar").style.width=(n/4*100)+"%";
+
  document.getElementById("soundBtn").textContent=soundOn?"ВКЛ":"ВЫКЛ";
  document.getElementById("animBtn").textContent=animationsOn?"ВКЛ":"ВЫКЛ";
 }
+
 function toggleSound(){
- soundOn=!soundOn;localStorage.setItem("soundOn",soundOn);
- document.getElementById("soundBtn").textContent=soundOn?"ВКЛ":"ВЫКЛ";
+ soundOn=!soundOn;
+ localStorage.setItem("soundOn",soundOn);
+
+ document.getElementById("soundBtn").textContent=
+  soundOn?"ВКЛ":"ВЫКЛ";
+
  toast("Звук "+(soundOn?"включён":"выключен"));
 }
+
 function toggleAnimations(){
  animationsOn=!animationsOn;
+
  localStorage.setItem("animationsOn",animationsOn);
+
  document.body.classList.toggle("no-animations",!animationsOn);
- document.getElementById("animBtn").textContent=animationsOn?"ВКЛ":"ВЫКЛ";
+
+ document.getElementById("animBtn").textContent=
+  animationsOn?"ВКЛ":"ВЫКЛ";
+
+ toast("Анимации "+(animationsOn?"включены":"выключены"));
 }
+
+
+// СЕКРЕТНЫЙ УРОВЕНЬ
 function openSecret(){
- if(completed.includes("artem")&&completed.includes("ilya")){
-  hideAll();document.getElementById("secretPage").classList.remove("hidden");
+ if(completed.length>=4){
+  hideAll();
+  document.getElementById("secretPage").classList.remove("hidden");
   confetti();
- }else toast("Секретный уровень закрыт! Пройди тесты Артёма и Ильи 🔒");
+ }else{
+  let left=4-completed.length;
+  toast("Секретный уровень закрыт! Осталось пройти "+left+" теста 🔒");
+ }
 }
+
+
+// СБРОС ПРОГРЕССА
 function resetProgress(){
  if(confirm("Точно сбросить прогресс?")){
   completed=[];
   localStorage.setItem("completedTests","[]");
-  showSettings();toast("Прогресс сброшен");
+  showSettings();
+  toast("Прогресс сброшен");
  }
 }
+
+
+// ЭФФЕКТЫ
 function confetti(){
  let c=document.getElementById("confetti");
  c.textContent="🎉 ✨ 🎊 💜 ✨ 🎉";
+
  setTimeout(()=>c.textContent="",2500);
 }
+
 function toast(message){
  let t=document.getElementById("toast");
- t.textContent=message;t.style.display="block";
+
+ t.textContent=message;
+ t.style.display="block";
+
  clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>t.style.display="none",2600);
+
+ window.toastTimer=setTimeout(()=>{
+  t.style.display="none";
+ },2600);
 }
+
 function beep(freq){
  try{
   const ctx=new (window.AudioContext||window.webkitAudioContext)();
-  const osc=ctx.createOscillator(),gain=ctx.createGain();
-  osc.frequency.value=freq;gain.gain.value=.04;
-  osc.connect(gain);gain.connect(ctx.destination);
-  osc.start();osc.stop(ctx.currentTime+.12);
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
+
+  osc.frequency.value=freq;
+  gain.gain.value=.04;
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start();
+  osc.stop(ctx.currentTime+.12);
  }catch(e){}
 }
+
+
+// ПРИМЕНЕНИЕ НАСТРОЕК
 document.body.classList.toggle("no-animations",!animationsOn);
+
+document.getElementById("soundBtn").textContent=soundOn?"ВКЛ":"ВЫКЛ";
+document.getElementById("animBtn").textContent=animationsOn?"ВКЛ":"ВЫКЛ";
+
+
+// ЗАПУСК СЧЁТЧИКА
 initLikes();
+
 </script>
+
 </body>
 </html>
