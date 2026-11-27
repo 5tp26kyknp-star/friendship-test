@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -55,16 +54,14 @@ header h1{font-size:32px;text-shadow:0 0 20px var(--pink)}
 }
 .tile{
  background:#39245a;border:2px solid #9c76d5;border-radius:20px;
- padding:12px;cursor:pointer;transition:.3s;overflow:hidden
+ padding:18px 12px;cursor:pointer;transition:.3s;overflow:hidden;
+ min-height:130px;display:flex;flex-direction:column;
+ justify-content:center
 }
 .tile:hover{transform:translateY(-5px);box-shadow:0 0 24px #d46bff88}
 .tile img{width:100%;height:145px;object-fit:cover;border-radius:14px}
 .tile h3{margin:10px 0 5px;font-size:17px}
 .tile p{font-size:12px;opacity:.8}
-.emoji-img{
- font-size:90px;height:145px;display:flex;
- align-items:center;justify-content:center
-}
 .question{font-size:22px;font-weight:bold;margin:24px 0}
 .answer{display:block;width:100%;background:#513b75}
 .good{background:#159c65!important}
@@ -134,8 +131,54 @@ footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
  margin:20px auto;animation:spin .8s linear infinite
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* СЕКРЕТНАЯ КАРТОЧКА ALENA_DADY */
+@keyframes alenaReveal{
+ 0%{
+  opacity:0;
+  transform:scale(.55) rotate(-8deg);
+  filter:blur(12px)
+ }
+ 60%{
+  opacity:1;
+  transform:scale(1.08) rotate(2deg);
+  filter:blur(0)
+ }
+ 100%{
+  transform:scale(1) rotate(0);
+  opacity:1
+ }
+}
+@keyframes alenaGlow{
+ 0%,100%{box-shadow:0 0 12px #ff65b755}
+ 50%{box-shadow:0 0 32px #ff65b7,0 0 60px #a879ff}
+}
+@keyframes questionPulse{
+ 0%,100%{transform:scale(1)}
+ 50%{transform:scale(1.12)}
+}
+.alena-reveal{
+ animation:alenaReveal 1.2s cubic-bezier(.2,.8,.2,1),
+          alenaGlow 2s 1.2s infinite;
+ border:2px solid #ff65b7!important;
+ background:linear-gradient(145deg,#54245e,#28183f)!important;
+}
+.alena-reveal .question-mark{
+ animation:questionPulse 1.2s infinite;
+}
+#alenaUnlockModal{
+ background:#10001bee;
+}
+#alenaUnlockModal .modalbox{
+ animation:alenaReveal 1.2s;
+ box-shadow:0 0 45px #ff65b788;
+}
+.alenaHeart{
+ font-size:80px;
+ animation:questionPulse 1s infinite;
+}
 @media(max-width:390px){
- .tile img,.emoji-img{height:115px}
+ .tile img{height:115px}
  header h1{font-size:26px}
  .card{padding:15px}
 }
@@ -173,7 +216,7 @@ footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
  </div>
 </div>
 
-<!-- СЕКРЕТНОЕ ПОЗДРАВЛЕНИЕ -->
+<!-- ПОЗДРАВЛЕНИЕ: МУСЯ -->
 <div id="secretUnlockModal" class="modal hidden">
  <div class="modalbox">
   <h1>🎉 ПОЗДРАВЛЯЮ! 🎉</h1>
@@ -182,6 +225,19 @@ footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
   <p>Теперь тебе доступна Муся 👑</p>
   <div style="font-size:65px">🍀💜🍀</div>
   <button onclick="closeSecretUnlock()">ПОНЯТНО!</button>
+ </div>
+</div>
+
+<!-- ПОЗДРАВЛЕНИЕ: ALENA_DADY -->
+<div id="alenaUnlockModal" class="modal hidden">
+ <div class="modalbox">
+  <h1>✨ СЕКРЕТ ОТКРЫТ ✨</h1>
+  <p>Ты прошёл абсолютно всё...</p>
+  <p>И открыл то, что было скрыто.</p>
+  <div class="alenaHeart">❤️</div>
+  <h2>ALENA_DADY</h2>
+  <p>Однажды ❤️</p>
+  <button onclick="closeAlenaUnlock(true)">ОТКРЫТЬ</button>
  </div>
 </div>
 
@@ -217,33 +273,30 @@ footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
    </div>
 
    <div class="tile" onclick="openQuiz('ilya')">
-    <img src="ilya.jpg" alt="Илья">
     <h3>2. ИЛЬЯ</h3>
     <p>Начать тест 🔥</p>
    </div>
 
    <div class="tile" onclick="openQuiz('egor')">
-    <div class="emoji-img">👑</div>
     <h3>3. ЕГОР</h3>
     <p>Начать тест 🔥</p>
    </div>
 
    <div class="tile" onclick="openQuiz('arikh')">
-    <div class="emoji-img">💀</div>
     <h3>4. АРИХ</h3>
     <p>Начать тест 🔥</p>
    </div>
 
-   <div class="tile secret" onclick="openSecret()">
-    <div class="emoji-img">🔒</div>
-    <h3>5. СЕКРЕТНЫЙ УРОВЕНЬ</h3>
-    <p>Муся 👑</p>
+   <div class="tile secret" id="musyaTile" onclick="openSecret()">
+    <h3 id="musyaTileTitle">5. СЕКРЕТНЫЙ УРОВЕНЬ</h3>
+    <p id="musyaTileText">Муся</p>
    </div>
 
-   <div class="tile" onclick="openQuiz('alena')">
-    <div class="emoji-img">🎁</div>
-    <h3>6. ALENA_DADY</h3>
-    <p>Бонусный тест ⭐</p>
+   <!-- ALENA_DADY ИЗНАЧАЛЬНО СКРЫТА -->
+   <div class="tile hidden" id="alenaTile" onclick="openAlena()">
+    <div class="question-mark" style="font-size:90px;height:110px;display:flex;align-items:center;justify-content:center">❓</div>
+    <h3>ALENA_DADY</h3>
+    <p>Однажды ❤️</p>
    </div>
 
   </div>
@@ -296,21 +349,29 @@ footer a{color:#ff9bd1;text-decoration:none;font-weight:bold}
 
  <p>Пройдено для открытия Муси: <b id="doneCount">0</b> из 4</p>
  <p>Осталось: <b id="leftCount">4</b></p>
- <p>Бонус Alena_dady: <b id="bonusStatus">Не пройден</b></p>
+ <p>Бонус Alena_dady: <b id="bonusStatus">Закрыт</b></p>
 
  <button onclick="openUpdates()">📋 ОБНОВЛЕНИЯ</button>
  <button class="bad" onclick="resetProgress()">СБРОСИТЬ ПРОГРЕСС</button>
  <button onclick="goHome()">← НА ГЛАВНУЮ</button>
 </section>
 
-<!-- СЕКРЕТНЫЙ УРОВЕНЬ -->
+<!-- СЕКРЕТНЫЙ УРОВЕНЬ МУСИ -->
 <section id="secretPage" class="card hidden">
- <h1>👑 МУСЯ 👑</h1>
+ <h1>МУСЯ</h1>
  <h2>ТЫ ОТКРЫЛ СЕКРЕТНЫЙ УРОВЕНЬ!</h2>
  <p>Поздравляю! Ты прошёл четыре испытания!</p>
  <div style="font-size:70px">🎉💜🎊🍀</div>
  <button onclick="openQuiz('musya')">НАЧАТЬ ТЕСТ МУСИ 🔥</button>
  <button onclick="goHome()">НА ГЛАВНУЮ</button>
+</section>
+
+<!-- СТРАНИЦА ALENA_DADY -->
+<section id="alenaPage" class="card hidden">
+ <div class="alenaHeart">❤️</div>
+ <h1>ALENA_DADY</h1>
+ <h2>Однажды ❤️</h2>
+ <button onclick="goHome()">← НА ГЛАВНУЮ</button>
 </section>
 
 <footer>
@@ -366,14 +427,6 @@ const tests = {
   {q:"Кто такой Дударев?",a:["Кал жувал","Недокэжуад"],c:0},
   {q:"Что носит?",a:["Синюю рубашку","Белую футболку"],c:0},
   {q:"Сколько друзей?",a:["100","1000"],c:0}
- ],
-
- alena:[
-  {q:"Вопрос 1 про Alena_dady",a:["Ответ 1","Ответ 2"],c:0},
-  {q:"Вопрос 2 про Alena_dady",a:["Ответ 1","Ответ 2"],c:0},
-  {q:"Вопрос 3 про Alena_dady",a:["Ответ 1","Ответ 2"],c:0},
-  {q:"Вопрос 4 про Alena_dady",a:["Ответ 1","Ответ 2"],c:0},
-  {q:"Вопрос 5 про Alena_dady",a:["Ответ 1","Ответ 2"],c:0}
  ]
 };
 
@@ -382,8 +435,7 @@ const testTitles={
  ilya:"ТЕСТ ПРО ИЛЬЮ",
  egor:"ТЕСТ ПРО ЕГОРА",
  arikh:"ТЕСТ ПРО АРИХА",
- musya:"ТЕСТ ПРО МУСЮ 👑",
- alena:"ТЕСТ ALENA_DADY ⭐"
+ musya:"ТЕСТ ПРО МУСЮ"
 };
 
 const mainTests=["artem","ilya","egor","arikh","musya"];
@@ -411,7 +463,7 @@ const updates=[
  {date:"23.11",title:"Обновление 1",items:["Первый тест","Интерфейс","Начало сайта"]},
  {date:"24.11",title:"Обновление 2",items:["Два теста","Новый интерфейс","Новые анимации","Настройки"]},
  {date:"26.11",title:"Обновление 3",items:["Новый интерфейс","Загрузочный фон","Изменения в настройках","Список обновлений"]},
- {date:"27.11",title:"Обновление 4",items:["Три новых теста","Оптимизация","Улучшенные анимации","Music 🎵"]}
+ {date:"27.11",title:"Обновление 4",items:["Три новых теста","Оптимизация","Улучшенные анимации","Music 🎵","Секретная Муся","Скрытый уровень ALENA_DADY"]}
 ];
 
 let updateIndex=0;
@@ -476,7 +528,7 @@ document.getElementById("no").onclick=function(){
 // ========================================
 
 function hideAll(){
- ["home","quiz","settingsPage","secretPage"].forEach(id=>{
+ ["home","quiz","settingsPage","secretPage","alenaPage"].forEach(id=>{
   document.getElementById(id).classList.add("hidden");
  });
 }
@@ -484,7 +536,66 @@ function hideAll(){
 function goHome(){
  start();
  hideAll();
+ renderSecretCards();
  document.getElementById("home").classList.remove("hidden");
+}
+
+// ========================================
+// СЕКРЕТНЫЕ КАРТОЧКИ
+// ========================================
+
+function isSecretUnlocked(){
+ return unlockTests.every(id=>completed.includes(id));
+}
+
+function isAlenaUnlocked(){
+ return mainTests.every(id=>completed.includes(id));
+}
+
+function renderSecretCards(){
+ const musyaTile=document.getElementById("musyaTile");
+ const musyaTitle=document.getElementById("musyaTileTitle");
+ const musyaText=document.getElementById("musyaTileText");
+
+ if(isSecretUnlocked()){
+  musyaTile.classList.remove("secret");
+  musyaTitle.textContent="5. МУСЯ";
+  musyaText.textContent=completed.includes("musya")
+   ?"Тест пройден"
+   :"Начать тест";
+ }else{
+  musyaTile.classList.add("secret");
+  musyaTitle.textContent="5. СЕКРЕТНЫЙ УРОВЕНЬ";
+  musyaText.textContent="Муся";
+ }
+
+ const alenaTile=document.getElementById("alenaTile");
+
+ if(isAlenaUnlocked()){
+  alenaTile.classList.remove("hidden");
+
+  if(localStorage.getItem("alenaJustUnlocked")==="true"){
+   alenaTile.classList.add("alena-reveal");
+  }else{
+   alenaTile.classList.remove("alena-reveal");
+  }
+ }else{
+  alenaTile.classList.add("hidden");
+  alenaTile.classList.remove("alena-reveal");
+ }
+}
+
+function openAlena(){
+ if(!isAlenaUnlocked()){
+  toast("Секрет закрыт!");
+  return;
+ }
+
+ localStorage.removeItem("alenaJustUnlocked");
+ document.getElementById("alenaTile").classList.remove("alena-reveal");
+
+ hideAll();
+ document.getElementById("alenaPage").classList.remove("hidden");
 }
 
 // ========================================
@@ -494,6 +605,11 @@ function goHome(){
 function openQuiz(name){
  if(!tests[name]){
   toast("Такого теста пока нет!");
+  return;
+ }
+
+ if(name==="musya"&&!isSecretUnlocked()){
+  toast("Секрет закрыт! Сначала пройди 4 теста 🔒");
   return;
  }
 
@@ -533,6 +649,9 @@ function showQuestion(){
 
  const box=document.getElementById("answers");
  box.innerHTML="";
+
+ // Сброс блокировки ответов для каждого нового вопроса
+ box.dataset.answered="false";
 
  q.a.forEach((answer,i)=>{
   const b=document.createElement("button");
@@ -591,7 +710,10 @@ function choose(choice){
 // ========================================
 
 function finish(){
- if(!completed.includes(current)){
+ const wasCompleted=completed.includes(current);
+ const finishedTest=current;
+
+ if(!wasCompleted){
   completed.push(current);
   saveProgress();
  }
@@ -609,7 +731,19 @@ function finish(){
   "Спасибо за прохождение! 💜";
 
  confetti();
+
  checkSecretUnlock();
+
+ // ALENA_DADY разблокируется после всех 5 тестов
+ if(finishedTest==="musya"&&!wasCompleted&&isAlenaUnlocked()){
+  localStorage.setItem("alenaJustUnlocked","true");
+
+  setTimeout(()=>{
+   goHome();
+   renderSecretCards();
+   document.getElementById("alenaUnlockModal").classList.remove("hidden");
+  },700);
+ }
 }
 
 function saveProgress(){
@@ -617,12 +751,8 @@ function saveProgress(){
 }
 
 // ========================================
-// СЕКРЕТНЫЙ УРОВЕНЬ
+// СЕКРЕТНЫЙ УРОВЕНЬ МУСИ
 // ========================================
-
-function isSecretUnlocked(){
- return unlockTests.every(id=>completed.includes(id));
-}
 
 function openSecret(){
  if(isSecretUnlocked()){
@@ -650,6 +780,15 @@ function closeSecretUnlock(){
  document.getElementById("secretUnlockModal").classList.add("hidden");
 }
 
+function closeAlenaUnlock(openPage=false){
+ document.getElementById("alenaUnlockModal").classList.add("hidden");
+
+ if(openPage){
+  localStorage.removeItem("alenaJustUnlocked");
+  openAlena();
+ }
+}
+
 // ========================================
 // НАСТРОЙКИ
 // ========================================
@@ -670,7 +809,7 @@ function showSettings(){
  document.getElementById("settingsBar").style.width=percent+"%";
 
  document.getElementById("bonusStatus").textContent=
-  completed.includes("alena")?"Пройдено ✅":"Не пройден";
+  isAlenaUnlocked()?"Открыт ❤️":"Закрыт";
 
  updateSettingButtons();
 }
@@ -744,6 +883,9 @@ function resetProgress(){
   completed=[];
   saveProgress();
   localStorage.removeItem("secretCongratulations");
+  localStorage.removeItem("alenaJustUnlocked");
+
+  renderSecretCards();
   showSettings();
   toast("Прогресс сброшен");
  }
@@ -797,10 +939,9 @@ updateSettingButtons();
 // ЗАПУСК
 // ========================================
 
+renderSecretCards();
 goHome();
 
 </script>
 </body>
 </html>
-
-
